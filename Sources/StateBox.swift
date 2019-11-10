@@ -8,7 +8,7 @@
 
 public struct StateBox<T> {
     
-    let state: T
+    public let state: T
     private let oldState: T?
     
     init(state: T, oldState: T?) {

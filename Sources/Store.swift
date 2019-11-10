@@ -10,7 +10,7 @@ import Foundation
 
 
 fileprivate var _queue: DispatchQueue = DispatchQueue.main
-var StoreQueue: DispatchQueue {
+public var StoreQueue: DispatchQueue {
     return _queue
 }
 
