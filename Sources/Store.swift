@@ -218,7 +218,7 @@ open class Store<State: RootStateType>: StoreType, StoreTrunk {
 
 // MARK: Skip Repeats for Equatable States
 
-protocol StoreProvider {
+public protocol StoreProvider {
 
     func subscribe<RootState, SelectedState, Subscriber>
     (
@@ -267,7 +267,7 @@ extension Store: StoreProvider {
     }
 }
 
-protocol StateProvider {
+public protocol StateProvider {
 
     func getState<Root: RootStateType, S: StateType>(keyPath: KeyPath<Root, S>) -> S
 }
