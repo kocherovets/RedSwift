@@ -11,17 +11,17 @@ public struct StateBox<T> {
     public let state: T
     private let oldState: T?
     
-    init(state: T, oldState: T?) {
+    public init(state: T, oldState: T?) {
         self.state = state
         self.oldState = oldState
     }
     
-    func isNew<E: Equatable>(keyPath: KeyPath<T, E>) -> Bool {
+    public func isNew<E: Equatable>(keyPath: KeyPath<T, E>) -> Bool {
         guard let oldState = oldState else { return true }
         return state[keyPath: keyPath] != oldState[keyPath: keyPath]
     }
     
-    func unsafeGetOldState() -> T? {
+    public func unsafeGetOldState() -> T? {
         return oldState
     }
 }
