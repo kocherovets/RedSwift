@@ -204,11 +204,9 @@ open class Store<State: RootStateType>: StoreType, StoreTrunk {
             print("---MIDDLEWARE---")
         }
         print("\(action)")
-        print("file: \(file)")
+        print("file: \(file):\(line)")
         print("function: \(function)")
-        print("line: \(line)")
         print(".")
-        print("CounterState.swift:53")
 
         dispatchFunction(action)
     }
