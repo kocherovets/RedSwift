@@ -274,7 +274,7 @@ public protocol StateProvider {
 
 extension Store: StateProvider {
 
-    func getState<Root: RootStateType, S: StateType>(keyPath: KeyPath<Root, S>) -> S {
+    public func getState<Root: RootStateType, S: StateType>(keyPath: KeyPath<Root, S>) -> S {
 
         return state[keyPath: keyPath as! KeyPath<State, S>]
     }
