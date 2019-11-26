@@ -164,7 +164,7 @@ open class Store<State: StateType>: StoreType, StoreTrunk {
             subscriptions.remove(at: index)
         }
     }
-    
+
     // swiftlint:disable:next identifier_name
     open func _defaultDispatch(action: Dispatchable) {
         guard !isDispatching else {
@@ -221,15 +221,86 @@ open class Store<State: StateType>: StoreType, StoreTrunk {
     public typealias DispatchCallback = (State) -> Void
 }
 
-public protocol StateProvider {
+// MARK: Skip Repeats for Equatable States
 
-//    func getState<S: StateType>() -> S
+public protocol StoreProvider {
+
+    func subscribe<S: StoreSubscriber> (_ subscriber: S)
+    
+    func unsubscribe(_ subscriber: AnyStoreSubscriber)
 }
 
-extension Store: StateProvider where State: Equatable {
-
-//    public func getState<S: StateType>() -> S where S == State {
+//public protocol StoreProvider {
 //
-//        return state
+////    func subscribe<State, Subscriber>
+////    (
+////        _ subscriber: Subscriber
+////    )
+////    where State: StateType,
+////        State: Equatable,
+////        State == Subscriber.StoreSubscriberStateType,
+////        Subscriber: StoreSubscriber
+//
+//    func subscribe<S: StoreSubscriber>(_ subscriber: S)
+//
+//    func unsubscribe(_ subscriber: AnyStoreSubscriber)
+//}
+
+//extension Store {
+//
+//    open func subscribe<S: StoreSubscriber>(_ subscriber: S)
+//    where S.StoreSubscriberStateType == State {
+//        guard subscriptionsAutomaticallySkipRepeats else {
+//            _ = subscribe(subscriber, transform: nil)
+//            return
+//        }
+//        _ = subscribe(subscriber, transform: { $0.skipRepeats() })
 //    }
+//}
+
+//extension Store: StoreProvider {
+//
+////    open func subscribe<State, Subscriber>
+////    (
+////        _ subscriber: Subscriber
+////    )
+////    where State: StateType,
+////        State: Equatable,
+////        State == Subscriber.StoreSubscriberStateType,
+////        Subscriber: StoreSubscriber
+////    {
+////        let originalSubscription = Subscription<State>()
+////
+////        var transformedSubscription: Subscription<State>? = nil
+////        if subscriptionsAutomaticallySkipRepeats {
+////            transformedSubscription = transformedSubscription?.skipRepeats()
+////        }
+////        _subscribe(subscriber,
+////                   originalSubscription: originalSubscription,
+////                   transformedSubscription: transformedSubscription)
+////    }
+//
+//    open func unsubscribe(_ subscriber: AnyStoreSubscriber) {
+//
+//        if let index = subscriptions.firstIndex(where: { return $0.subscriber === subscriber }) {
+//            subscriptions.remove(at: index)
+//        }
+//    }
+//}
+
+public protocol StateProvider {
+
+    associatedtype S: StateType
+
+    func getState() -> S
+}
+
+extension Store: StateProvider {
+
+    public typealias S = State
+
+    public func getState() -> S  {
+
+        return state
+    }
 }
