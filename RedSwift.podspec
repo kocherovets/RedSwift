@@ -10,7 +10,7 @@ s.license = { :type => "MIT", :file => "LICENSE" }
 s.homepage = 'https://github.com/kocherovets/RedSwift'
 s.author = { 'Dmitry Kocherovets' => 'kocherovets@gmail.com' }
 
-s.version = "1.0.2"
+s.version = "1.0.4"
 s.source = { :git => 'https://github.com/kocherovets/RedSwift.git', :tag => s.version.to_s  }
 s.source_files = "Sources/**/*.{swift}"
 
