@@ -22,7 +22,7 @@ public var StoreQueue: DispatchQueue {
  reducers you can combine them by initializng a `MainReducer` with all of your reducers as an
  argument.
  */
-open class Store<State: RootStateType>: StoreType, StoreTrunk {    
+open class Store<State: StateType>: StoreType, StoreTrunk {
 
     typealias SubscriptionType = SubscriptionBox<State>
 
@@ -126,7 +126,7 @@ open class Store<State: RootStateType>: StoreType, StoreTrunk {
         _ = subscribe(subscriber, transform: nil)
     }
 
-    open func subscribe<SelectedState, S: StoreSubscriber>
+    private func subscribe<SelectedState, S: StoreSubscriber>
     (
         _ subscriber: S,
         transform: ((Subscription<State>) -> Subscription<SelectedState>)?
@@ -158,6 +158,13 @@ open class Store<State: RootStateType>: StoreType, StoreTrunk {
         )
     }
 
+    open func unsubscribe(_ subscriber: AnyStoreSubscriber) {
+
+        if let index = subscriptions.firstIndex(where: { return $0.subscriber === subscriber }) {
+            subscriptions.remove(at: index)
+        }
+    }
+    
     // swiftlint:disable:next identifier_name
     open func _defaultDispatch(action: Dispatchable) {
         guard !isDispatching else {
@@ -214,66 +221,15 @@ open class Store<State: RootStateType>: StoreType, StoreTrunk {
     public typealias DispatchCallback = (State) -> Void
 }
 
-// MARK: Skip Repeats for Equatable States
-
-public protocol StoreProvider {
-
-    func subscribe<RootState, SelectedState, Subscriber>
-    (
-        _ subscriber: Subscriber,
-        keyPath: KeyPath<RootState, SelectedState>?
-    )
-    where RootState: RootStateType,
-        SelectedState: Equatable,
-        SelectedState == Subscriber.StoreSubscriberStateType,
-        Subscriber: StoreSubscriber
-
-    func unsubscribe(_ subscriber: AnyStoreSubscriber)
-}
-
-extension Store: StoreProvider {
-
-    open func subscribe<RootState, SelectedState, Subscriber>
-    (
-        _ subscriber: Subscriber,
-        keyPath: KeyPath<RootState, SelectedState>?
-    )
-    where RootState: RootStateType,
-        SelectedState: Equatable,
-        SelectedState == Subscriber.StoreSubscriberStateType,
-        Subscriber: StoreSubscriber
-    {
-        let originalSubscription = Subscription<State>()
-
-        var transformedSubscription: Subscription<SelectedState>? = nil
-        if let keyPath = keyPath {
-            transformedSubscription = originalSubscription.select(keyPath: keyPath as! KeyPath<State, SelectedState>)
-        }
-        if subscriptionsAutomaticallySkipRepeats {
-            transformedSubscription = transformedSubscription?.skipRepeats()
-        }
-        _subscribe(subscriber,
-                   originalSubscription: originalSubscription,
-                   transformedSubscription: transformedSubscription)
-    }
-
-    open func unsubscribe(_ subscriber: AnyStoreSubscriber) {
-
-        if let index = subscriptions.firstIndex(where: { return $0.subscriber === subscriber }) {
-            subscriptions.remove(at: index)
-        }
-    }
-}
-
 public protocol StateProvider {
 
-    func getState<Root: RootStateType, S: StateType>(keyPath: KeyPath<Root, S>) -> S
+//    func getState<S: StateType>() -> S
 }
 
-extension Store: StateProvider {
+extension Store: StateProvider where State: Equatable {
 
-    public func getState<Root: RootStateType, S: StateType>(keyPath: KeyPath<Root, S>) -> S {
-
-        return state[keyPath: keyPath as! KeyPath<State, S>]
-    }
+//    public func getState<S: StateType>() -> S where S == State {
+//
+//        return state
+//    }
 }

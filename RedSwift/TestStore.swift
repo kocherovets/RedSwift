@@ -13,12 +13,12 @@ func delay(_ delay: Double, closure: @escaping () -> ()) {
     DispatchQueue.main.asyncAfter(deadline: when, execute: closure)
 }
 
-struct TestState: StateType, Equatable {
+struct TestState: StateType {
     var companyName: String = "test"
 }
 
 
-struct State: RootStateType, Equatable {
+struct St: StateType {
     var test = TestState()
     var counter = CounterState()
 }
@@ -36,11 +36,11 @@ class DependencyContainer: SideEffectDependencyContainer {
     let api = APIManager()
 }
 
-var store = Store<State>(state: State(),
+var store = Store<St>(state: St(),
                          queueTitle: "queueTitle",
                          sideEffectDependencyContainer: DependencyContainer(),
                          middleware: [])
 
-class TestStore: Store<State> {
+class TestStore: Store<St> {
 
 }

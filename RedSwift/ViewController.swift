@@ -15,22 +15,18 @@ class ViewController: UIViewController, StoreSubscriber {
     @IBOutlet weak var add150Button: UIButton!
     @IBOutlet weak var activityIndicatorV: UIActivityIndicatorView!
 
-    var keyPath: KeyPath<State, CounterState> {
-        return \.counter
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        store.subscribe(self, keyPath: keyPath)
+        store.subscribe(self)
     }
 
-    func stateChanged(box: StateBox<CounterState>) {
+    func stateChanged(box: StateBox<St>) {
 
         DispatchQueue.main.async {
-            self.companyNameLabel.text = "\(box.state.counter)"
+            self.companyNameLabel.text = "\(box.state.counter.counter)"
 
-            if box.state.incrementRequested {
+            if box.state.counter.incrementRequested {
                 self.activityIndicatorV.startAnimating()
                 self.add1Button.isHidden = true
                 self.add150Button.isHidden = true

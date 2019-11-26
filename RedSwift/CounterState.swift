@@ -19,7 +19,7 @@ struct CounterState: StateType, Equatable {
 
 struct IncrementAction: Action {
 
-    func updateState(_ state: inout State) {
+    func updateState(_ state: inout St) {
         state.counter.counter += 1
     }
 }
@@ -28,7 +28,7 @@ struct AddAction: Action {
 
     let value: Int
 
-    func updateState(_ state: inout State) {
+    func updateState(_ state: inout St) {
 
         state.counter.counter += value
         state.counter.incrementRequested = false
@@ -37,7 +37,7 @@ struct AddAction: Action {
 
 struct RequestIncrementAction: Action {
 
-    func updateState(_ state: inout State) {
+    func updateState(_ state: inout St) {
 
         state.counter.incrementRequested = true
     }
@@ -45,7 +45,7 @@ struct RequestIncrementAction: Action {
 
 struct RequestIncrementSE: SideEffect {
 
-    func sideEffect(state: State, trunk: Trunk, dependencies: DependencyContainer) {
+    func sideEffect(state: St, trunk: Trunk, dependencies: DependencyContainer) {
 
         trunk.dispatch(RequestIncrementAction())
 
