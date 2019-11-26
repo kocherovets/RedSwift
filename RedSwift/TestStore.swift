@@ -18,7 +18,7 @@ struct TestState: StateType {
 }
 
 
-struct St: StateType {
+struct St: RootStateType {
     var test = TestState()
     var counter = CounterState()
 }

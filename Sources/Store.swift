@@ -22,7 +22,7 @@ public var StoreQueue: DispatchQueue {
  reducers you can combine them by initializng a `MainReducer` with all of your reducers as an
  argument.
  */
-open class Store<State: StateType>: StoreType, StoreTrunk {
+open class Store<State: RootStateType>: StoreType, StoreTrunk {
 
     typealias SubscriptionType = SubscriptionBox<State>
 
@@ -290,17 +290,14 @@ public protocol StoreProvider {
 
 public protocol StateProvider {
 
-    associatedtype S: StateType
-
-    func getState() -> S
+    func getState<S: RootStateType>() -> S
 }
 
 extension Store: StateProvider {
 
-    public typealias S = State
 
-    public func getState() -> S  {
+    public func getState<S: RootStateType>() -> S  {
 
-        return state
+        return state as! S
     }
 }
