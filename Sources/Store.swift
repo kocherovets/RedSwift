@@ -117,15 +117,6 @@ open class Store<State: RootStateType>: StoreType, StoreTrunk {
         }
     }
 
-    open func subscribe<S: StoreSubscriber>
-    (
-        _ subscriber: S
-    )
-    where S.StoreSubscriberStateType == State
-    {
-        _ = subscribe(subscriber, transform: nil)
-    }
-
     private func subscribe<SelectedState, S: StoreSubscriber>
     (
         _ subscriber: S,
@@ -156,13 +147,6 @@ open class Store<State: RootStateType>: StoreType, StoreTrunk {
             transformedSubscription: transformedSubscription,
             subscriber: subscriber
         )
-    }
-
-    open func unsubscribe(_ subscriber: AnyStoreSubscriber) {
-
-        if let index = subscriptions.firstIndex(where: { return $0.subscriber === subscriber }) {
-            subscriptions.remove(at: index)
-        }
     }
 
     // swiftlint:disable:next identifier_name
@@ -226,8 +210,32 @@ open class Store<State: RootStateType>: StoreType, StoreTrunk {
 public protocol StoreProvider {
 
     func subscribe<S: StoreSubscriber> (_ subscriber: S)
-    
+
     func unsubscribe(_ subscriber: AnyStoreSubscriber)
+}
+
+extension Store: StoreProvider {
+    
+    public func subscribe<S>(_ subscriber: S) where S : StoreSubscriber {
+        _ = subscribe(subscriber, transform: nil)
+    }
+    
+
+//    open func subscribe<S: StoreSubscriber>
+//    (
+//        _ subscriber: S
+//    )
+//    where S.StoreSubscriberStateType == State
+//    {
+//        _ = subscribe(subscriber, transform: nil)
+//    }
+    
+    open func unsubscribe(_ subscriber: AnyStoreSubscriber) {
+
+        if let index = subscriptions.firstIndex(where: { return $0.subscriber === subscriber }) {
+            subscriptions.remove(at: index)
+        }
+    }
 }
 
 //public protocol StoreProvider {
@@ -296,7 +304,7 @@ public protocol StateProvider {
 extension Store: StateProvider {
 
 
-    public func getState<S: RootStateType>() -> S  {
+    public func getState<S: RootStateType>() -> S {
 
         return state as! S
     }
