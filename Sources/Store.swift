@@ -44,6 +44,7 @@ open class Store<State: RootStateType>: StoreType, StoreTrunk {
     var subscriptions: Set<SubscriptionType> = []
 
     private var isDispatching = false
+    private var queueTitle = "kjfasdk aklsdfj alskf"
 
     public var dispatchFunction: DispatchFunction!
 
@@ -74,6 +75,7 @@ open class Store<State: RootStateType>: StoreType, StoreTrunk {
         self.sideEffectDependencyContainer = sideEffectDependencyContainer
 
         if let queueTitle = queueTitle {
+            self.queueTitle = queueTitle
             _queue = DispatchQueue(label: queueTitle, qos: .userInteractive)
         }
 
@@ -162,8 +164,8 @@ open class Store<State: RootStateType>: StoreType, StoreTrunk {
 
         isDispatching = true
 
-        StoreQueue.async { [weak self] in
-
+        let f = { [weak self] in
+            
             guard let self = self else { fatalError() }
 
             switch action {
@@ -176,6 +178,12 @@ open class Store<State: RootStateType>: StoreType, StoreTrunk {
             default:
                 break
             }
+        }
+        
+        if Thread.current.threadName == queueTitle {
+            f()
+        } else {
+            StoreQueue.async { f() }
         }
 
         isDispatching = false
@@ -307,5 +315,19 @@ extension Store: StateProvider {
     public func getState<S: RootStateType>() -> S {
 
         return state as! S
+    }
+}
+
+extension Thread {
+
+    var threadName: String {
+        if let currentOperationQueue = OperationQueue.current?.name {
+            return "OperationQueue: \(currentOperationQueue)"
+        } else if let underlyingDispatchQueue = OperationQueue.current?.underlyingQueue?.label {
+            return "DispatchQueue: \(underlyingDispatchQueue)"
+        } else {
+            let name = __dispatch_queue_get_label(nil)
+            return String(cString: name, encoding: .utf8) ?? Thread.current.description
+        }
     }
 }
