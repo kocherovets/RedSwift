@@ -8,13 +8,6 @@
 
 import Foundation
 
-
-fileprivate var _queue: DispatchQueue = DispatchQueue.main
-public var StoreQueue: DispatchQueue {
-    return _queue
-}
-
-
 /**
  This class is the default implementation of the `Store` protocol. You will use this store in most
  of your applications. You shouldn't need to implement your own store.
@@ -44,7 +37,7 @@ open class Store<State: RootStateType>: StoreType, StoreTrunk {
     var subscriptions: Set<SubscriptionType> = []
 
     private var isDispatching = false
-    private var queueTitle = "kjfasdk aklsdfj alskf"
+    private var queue: DispatchQueue = DispatchQueue.main
 
     public var dispatchFunction: DispatchFunction!
 
@@ -66,7 +59,7 @@ open class Store<State: RootStateType>: StoreType, StoreTrunk {
     ///   implements `Equatable`. Defaults to `true`.
     public required init(
         state: State?,
-        queueTitle: String?,
+        queue: DispatchQueue?,
         sideEffectDependencyContainer: SideEffectDependencyContainer,
         middleware: [Middleware<State>] = [],
         automaticallySkipsRepeats: Bool = true
@@ -74,9 +67,8 @@ open class Store<State: RootStateType>: StoreType, StoreTrunk {
 
         self.sideEffectDependencyContainer = sideEffectDependencyContainer
 
-        if let queueTitle = queueTitle {
-            self.queueTitle = queueTitle
-            _queue = DispatchQueue(label: queueTitle, qos: .userInteractive)
+        if let queue = queue {
+            self.queue = queue
         }
 
         self.subscriptionsAutomaticallySkipRepeats = automaticallySkipsRepeats
@@ -180,10 +172,10 @@ open class Store<State: RootStateType>: StoreType, StoreTrunk {
             }
         }
         
-        if Thread.current.threadName == queueTitle {
+        if Thread.current.threadName == queue.label {
             f()
         } else {
-            StoreQueue.async { f() }
+            queue.async { f() }
         }
 
         isDispatching = false
