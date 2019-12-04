@@ -37,7 +37,7 @@ open class Store<State: RootStateType>: StoreType, StoreTrunk {
     var subscriptions: Set<SubscriptionType> = []
 
     private var isDispatching = false
-    private var queue: DispatchQueue = DispatchQueue.main
+    let queue: DispatchQueue
 
     public var dispatchFunction: DispatchFunction!
 
@@ -59,7 +59,7 @@ open class Store<State: RootStateType>: StoreType, StoreTrunk {
     ///   implements `Equatable`. Defaults to `true`.
     public required init(
         state: State?,
-        queue: DispatchQueue?,
+        queue: DispatchQueue,
         sideEffectDependencyContainer: SideEffectDependencyContainer,
         middleware: [Middleware<State>] = [],
         automaticallySkipsRepeats: Bool = true
@@ -67,9 +67,7 @@ open class Store<State: RootStateType>: StoreType, StoreTrunk {
 
         self.sideEffectDependencyContainer = sideEffectDependencyContainer
 
-        if let queue = queue {
-            self.queue = queue
-        }
+        self.queue = queue
 
         self.subscriptionsAutomaticallySkipRepeats = automaticallySkipsRepeats
 
@@ -157,7 +155,7 @@ open class Store<State: RootStateType>: StoreType, StoreTrunk {
         isDispatching = true
 
         let f = { [weak self] in
-            
+
             guard let self = self else { fatalError() }
 
             switch action {
@@ -171,7 +169,7 @@ open class Store<State: RootStateType>: StoreType, StoreTrunk {
                 break
             }
         }
-        
+
         if Thread.current.threadName == queue.label {
             f()
         } else {
@@ -215,11 +213,11 @@ public protocol StoreProvider {
 }
 
 extension Store: StoreProvider {
-    
-    public func subscribe<S>(_ subscriber: S) where S : StoreSubscriber {
+
+    public func subscribe<S>(_ subscriber: S) where S: StoreSubscriber {
         _ = subscribe(subscriber, transform: nil)
     }
-    
+
 
 //    open func subscribe<S: StoreSubscriber>
 //    (
@@ -229,7 +227,7 @@ extension Store: StoreProvider {
 //    {
 //        _ = subscribe(subscriber, transform: nil)
 //    }
-    
+
     open func unsubscribe(_ subscriber: AnyStoreSubscriber) {
 
         if let index = subscriptions.firstIndex(where: { return $0.subscriber === subscriber }) {
