@@ -37,7 +37,7 @@ open class Store<State: RootStateType>: StoreType, StoreTrunk {
     var subscriptions: Set<SubscriptionType> = []
 
     private var isDispatching = false
-    let queue: DispatchQueue
+    public let queue: DispatchQueue
 
     public var dispatchFunction: DispatchFunction!
 
