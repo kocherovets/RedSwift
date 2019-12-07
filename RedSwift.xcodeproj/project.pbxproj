@@ -15,7 +15,6 @@
 		C3709F3A239C311C00CC8DD8 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DFBA2123786B41003259FF /* Action.swift */; };
 		C3709F3B239C311C00CC8DD8 /* DispatchingStoreType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DFBA1B23786B41003259FF /* DispatchingStoreType.swift */; };
 		C3709F3C239C311C00CC8DD8 /* Middleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DFBA2223786B41003259FF /* Middleware.swift */; };
-		C3709F3D239C311C00CC8DD8 /* Reducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DFBA2023786B41003259FF /* Reducer.swift */; };
 		C3709F3E239C311C00CC8DD8 /* SideEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DFBA5E23786CC3003259FF /* SideEffects.swift */; };
 		C3709F3F239C311C00CC8DD8 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DFBA1A23786B41003259FF /* State.swift */; };
 		C3709F40239C311C00CC8DD8 /* StateBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DFBA2323786B42003259FF /* StateBox.swift */; };
@@ -121,7 +120,6 @@
 		C3DFBA1D23786B41003259FF /* Coding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coding.swift; sourceTree = "<group>"; };
 		C3DFBA1E23786B41003259FF /* Assertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assertions.swift; sourceTree = "<group>"; };
 		C3DFBA1F23786B41003259FF /* TypeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeHelper.swift; sourceTree = "<group>"; };
-		C3DFBA2023786B41003259FF /* Reducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reducer.swift; sourceTree = "<group>"; };
 		C3DFBA2123786B41003259FF /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		C3DFBA2223786B41003259FF /* Middleware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Middleware.swift; sourceTree = "<group>"; };
 		C3DFBA2323786B42003259FF /* StateBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateBox.swift; sourceTree = "<group>"; };
@@ -255,10 +253,9 @@
 			isa = PBXGroup;
 			children = (
 				C3DFBA2123786B41003259FF /* Action.swift */,
+				C3DFBA5E23786CC3003259FF /* SideEffects.swift */,
 				C3DFBA1B23786B41003259FF /* DispatchingStoreType.swift */,
 				C3DFBA2223786B41003259FF /* Middleware.swift */,
-				C3DFBA2023786B41003259FF /* Reducer.swift */,
-				C3DFBA5E23786CC3003259FF /* SideEffects.swift */,
 				C3DFBA1A23786B41003259FF /* State.swift */,
 				C3DFBA2323786B42003259FF /* StateBox.swift */,
 				C3DFBA2623786B42003259FF /* Store.swift */,
@@ -494,7 +491,6 @@
 				C3709F41239C311C00CC8DD8 /* Store.swift in Sources */,
 				C3709F43239C311C00CC8DD8 /* StoreType.swift in Sources */,
 				C3709F3B239C311C00CC8DD8 /* DispatchingStoreType.swift in Sources */,
-				C3709F3D239C311C00CC8DD8 /* Reducer.swift in Sources */,
 				C3709F3A239C311C00CC8DD8 /* Action.swift in Sources */,
 				C3709F3F239C311C00CC8DD8 /* State.swift in Sources */,
 				C3709F47239C312300CC8DD8 /* TypeHelper.swift in Sources */,
