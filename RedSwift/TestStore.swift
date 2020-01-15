@@ -32,15 +32,14 @@ class APIManager {
     }
 }
 
-class DependencyContainer: SideEffectDependencyContainer {
-    let api = APIManager()
-}
+//class DependencyContainer: SideEffectDependencyContainer {
+//    let api = APIManager()
+//}
 
 let storeQueue = DispatchQueue(label: "queueTitle", qos: .userInteractive)
 
 var store = Store<St>(state: St(),
                       queue: storeQueue,
-                      sideEffectDependencyContainer: DependencyContainer(),
                       middleware: [])
 
 class TestStore: Store<St> {

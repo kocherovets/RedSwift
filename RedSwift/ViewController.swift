@@ -43,7 +43,7 @@ class ViewController: UIViewController, StoreSubscriber {
     }
 
     @IBAction func addAction150() {
-        store.dispatch(RequestIncrementSE())
+//        store.dispatch(RequestIncrementSE())
     }
 
 }

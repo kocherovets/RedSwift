@@ -43,14 +43,14 @@ struct RequestIncrementAction: Action {
     }
 }
 
-struct RequestIncrementSE: SideEffect {
-
-    func sideEffect(state: St, trunk: Trunk, dependencies: DependencyContainer) {
-
-        trunk.dispatch(RequestIncrementAction())
-
-        dependencies.api.test { value in
-            trunk.dispatch(AddAction(value: value))
-        }
-    }
-}
+//struct RequestIncrementSE: SideEffect {
+//
+//    func sideEffect(state: St, trunk: Trunk, dependencies: DependencyContainer) {
+//
+//        trunk.dispatch(RequestIncrementAction())
+//
+//        dependencies.api.test { value in
+//            trunk.dispatch(AddAction(value: value))
+//        }
+//    }
+//}
