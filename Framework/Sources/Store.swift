@@ -37,7 +37,7 @@ open class Store<State: RootStateType>: StoreTrunk {
 
     private var isDispatching = false
     public let queue: DispatchQueue
-    private var lastAction: Dispatchable?
+    public var lastAction: Dispatchable?
 
     public var dispatchFunction: DispatchFunction!
 
