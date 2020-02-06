@@ -16,7 +16,7 @@ import Foundation
  argument.
  */
 
-public struct AddSubscriberAction: Dispatchable {}
+public struct AddSubscriberAction: Dispatchable { }
 
 open class Store<State: RootStateType>: StoreTrunk {
 
@@ -30,7 +30,7 @@ open class Store<State: RootStateType>: StoreTrunk {
 
         let oldValue = _state ?? state
         _state = state
-        
+
         self.lastAction = lastAction
 
         subscriptions.forEach {
@@ -45,10 +45,9 @@ open class Store<State: RootStateType>: StoreTrunk {
     var subscriptions: Set<SubscriptionType> = []
     var loggingExcludedActions = [Dispatchable.Type]()
 
-    private var isDispatching = false
     public let queue: DispatchQueue
     public var lastAction: Dispatchable?
-    
+
     public var dispatchFunction: DispatchFunction!
 
 /// Initializes the store with a reducer, an initial state and a list of middleware.
@@ -115,19 +114,9 @@ open class Store<State: RootStateType>: StoreTrunk {
 
 // swiftlint:disable:next identifier_name
     private func _defaultDispatch(action: Dispatchable) {
-        guard !isDispatching else {
-            raiseFatalError(
-                "ReSwift:ConcurrentMutationError- Action has been dispatched while" +
-                    " a previous action is action is being processed. A reducer" +
-                    " is dispatching an action, or ReSwift is used in a concurrent context" +
-                    " (e.g. from multiple threads)."
-            )
-        }
 
-        isDispatching = true
-
-        let f = { [weak self] in
-
+        queue.async { [weak self] in
+            
             guard let self = self else { fatalError() }
 
             switch action {
@@ -138,14 +127,6 @@ open class Store<State: RootStateType>: StoreTrunk {
                 break
             }
         }
-
-        if Thread.current.threadName == queue.label {
-            f()
-        } else {
-            queue.async { f() }
-        }
-
-        isDispatching = false
     }
 
     public func dispatch(_ action: Dispatchable,
