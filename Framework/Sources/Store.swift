@@ -22,7 +22,6 @@ open class Store<State: RootStateType>: StoreTrunk {
 
     typealias SubscriptionType = SubscriptionBox<State>
 
-//    private(set) public var state: State! {
     private var _state: State!
     public var state: State { _state! }
 
@@ -43,50 +42,23 @@ open class Store<State: RootStateType>: StoreTrunk {
     }
 
     var subscriptions: Set<SubscriptionType> = []
-    var loggingExcludedActions = [Dispatchable.Type]()
 
     public let queue: DispatchQueue
     public var lastAction: Dispatchable?
 
-    public var dispatchFunction: DispatchFunction!
+    private var middleware: [Middleware] = []
+    private var statedMiddleware: [StatedMiddleware<State>] = []
 
-/// Initializes the store with a reducer, an initial state and a list of middleware.
-///
-/// Middleware is applied in the order in which it is passed into this constructor.
-///
-/// - parameter reducer: Main reducer that processes incoming actions.
-/// - parameter state: Initial state, if any. Can be `nil` and will be
-///   provided by the reducer in that case.
-/// - parameter middleware: Ordered list of action pre-processors, acting
-///   before the root reducer.
-/// - parameter automaticallySkipsRepeats: If `true`, the store will attempt
-///   to skip idempotent state updates when a subscriber's state type
-///   implements `Equatable`. Defaults to `true`.
     public required init(
         state: State?,
         queue: DispatchQueue,
-        loggingExcludedActions: [Dispatchable.Type],
-        middleware: [Middleware<State>] = []
+        middleware: [Middleware] = [],
+        statedMiddleware: [StatedMiddleware<State>] = []
     ) {
 
         self.queue = queue
-        self.loggingExcludedActions = loggingExcludedActions
-
-        // Wrap the dispatch function with all middlewares
-        self.dispatchFunction = middleware
-            .reversed()
-            .reduce(
-                { [unowned self] action in
-                    self._defaultDispatch(action: action) },
-                { dispatchFunction, middleware in
-                    // If the store get's deinitialized before the middleware is complete; drop
-                    // the action without dispatching.
-                    let dispatch: (Dispatchable) -> Void = { [weak self] in self?.dispatch($0) }
-                    let getState = { [weak self] in self?.state }
-                    return middleware(dispatch, getState)(dispatchFunction)
-                })
-
-
+        self.middleware = middleware
+        self.statedMiddleware = statedMiddleware
         self._state = state
     }
 
@@ -112,12 +84,22 @@ open class Store<State: RootStateType>: StoreTrunk {
         }
     }
 
-// swiftlint:disable:next identifier_name
-    private func _defaultDispatch(action: Dispatchable) {
+    public func dispatch(_ action: Dispatchable,
+                         file: String = #file,
+                         function: String = #function,
+                         line: Int = #line) {
 
         queue.async { [weak self] in
-            
+
             guard let self = self else { fatalError() }
+
+            for middleware in self.middleware {
+                middleware.on(action: action, file: file, function: function, line: line)
+            }
+
+            for middleware in self.statedMiddleware {
+                middleware.on(action: action, state: self.state, file: file, function: function, line: line)
+            }
 
             switch action {
             case let action as AnyAction:
@@ -127,34 +109,6 @@ open class Store<State: RootStateType>: StoreTrunk {
                 break
             }
         }
-    }
-
-    public func dispatch(_ action: Dispatchable,
-                         file: String = #file,
-                         function: String = #function,
-                         line: Int = #line) {
-
-        if loggingExcludedActions.first(where: { $0 == type(of: action) }) == nil {
-
-            var type: String
-            switch action {
-            case _ as AnyAction:
-                type = "---ACTION---"
-            default:
-                type = "---MIDDLEWARE---"
-            }
-            let log =
-                """
-            \(type)
-            \(action)
-            file: \(file):\(line)
-            function: \(function)
-            .
-            """
-            print(log)
-        }
-
-        dispatchFunction(action)
     }
 }
 
