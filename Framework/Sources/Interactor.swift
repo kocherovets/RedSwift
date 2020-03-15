@@ -50,24 +50,31 @@ open class Interactor<State: RootStateType>: StoreSubscriber, Trunk {
 
         self.store = store
         store.subscribe(self)
-        
+
         onInit()
     }
 
     open func onInit() {
-        
+
     }
-    
+
     deinit {
         store.unsubscribe(self)
     }
 
     public func stateChanged(box: StateBox<State>) {
 
-        for sideEffect in sideEffects {
-            if sideEffect.condition(box: box) {
-                sideEffect.execute(box: box, trunk: self, service: self)
+        if condition(box: box) {
+            for sideEffect in sideEffects {
+                if sideEffect.condition(box: box) {
+                    sideEffect.execute(box: box, trunk: self, service: self)
+                }
             }
         }
+    }
+
+    open func condition(box: Any) -> Bool {
+
+        return true
     }
 }
