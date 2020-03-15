@@ -1,5 +1,5 @@
 //
-//  Service.swift
+//  Interactor.swift
 //  Framework
 //
 //  Created by Dmitry Kocherovets on 15.01.2020.
@@ -38,7 +38,7 @@ public extension SideEffect {
     }
 }
 
-open class Service<State: RootStateType>: StoreSubscriber, Trunk {
+open class Interactor<State: RootStateType>: StoreSubscriber, Trunk {
 
     private var store: Store<State>
     public var storeTrunk: StoreTrunk { store }
