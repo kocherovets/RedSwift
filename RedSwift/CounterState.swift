@@ -17,7 +17,7 @@ struct CounterState: StateType, Equatable {
     var incrementRequested = false
 }
 
-struct IncrementAction: Action {
+struct IncrementAction: Action, ThrottleAction {
 
     func updateState(_ state: inout St) {
         state.counter.counter += 1

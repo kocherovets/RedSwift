@@ -49,6 +49,8 @@ open class Store<State: RootStateType>: StoreTrunk {
     private var middleware: [Middleware] = []
     private var statedMiddleware: [StatedMiddleware<State>] = []
 
+    private var throttleActions = [String: TimeInterval]()
+
     public required init(
         state: State?,
         queue: DispatchQueue,
@@ -88,6 +90,18 @@ open class Store<State: RootStateType>: StoreTrunk {
                          file: String = #file,
                          function: String = #function,
                          line: Int = #line) {
+
+        if let throttleAction = action as? ThrottleAction
+        {
+            if
+                let interval = throttleActions["\(action)"],
+                Date().timeIntervalSince1970 - interval < throttleAction.interval
+            {
+                print("throttleAction \(action)")
+                return
+            }
+            throttleActions["\(action)"] = Date().timeIntervalSince1970
+        }
 
         queue.async { [weak self] in
 

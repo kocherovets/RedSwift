@@ -34,4 +34,18 @@ public extension Action {
 
         return typedState
     }
+    
+    func updateState(_ state: inout State) {}
+}
+
+public protocol ThrottleAction {
+    
+    var interval: TimeInterval { get }
+}
+
+public extension ThrottleAction {
+    
+    var interval: TimeInterval {
+        0.3
+    }
 }
