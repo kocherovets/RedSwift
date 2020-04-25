@@ -34,8 +34,6 @@ public extension Action {
 
         return typedState
     }
-    
-    func updateState(_ state: inout State) {}
 }
 
 public protocol ThrottleAction {
