@@ -40,14 +40,11 @@ public extension SideEffect {
 
 public class InteractorLogger {
 
-    public static var logger: ((String) -> ())? = { sideEffect in
-        print(
-            """
-            ---SE---
-            \(sideEffect)
-            .
-            """
-        )
+    public static var logger: ((AnySideEffect) -> ())? = { sideEffect in
+
+        print("---SE---")
+        dump(sideEffect)
+        print(".")
     }
 }
 
@@ -80,7 +77,7 @@ open class Interactor<State: RootStateType>: StoreSubscriber, Trunk {
         if condition(box: box) {
             for sideEffect in sideEffects {
                 if sideEffect.condition(box: box) {
-                    InteractorLogger.logger?("\(sideEffect)")
+                    InteractorLogger.logger?(sideEffect)
                     sideEffect.execute(box: box, trunk: self, interactor: self)
                 }
             }

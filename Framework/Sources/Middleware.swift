@@ -10,22 +10,26 @@ public typealias DispatchFunction = (Dispatchable) -> Void
 
 open class Middleware {
 
-    public func on(action: Dispatchable,
-                   file: String,
-                   function: String,
-                   line: Int
+    public init() { }
+
+    open func on(action: Dispatchable,
+                 file: String,
+                 function: String,
+                 line: Int
     ) {
-        
+
     }
 }
 
 open class StatedMiddleware<State: RootStateType> {
 
-    public func on(action: Dispatchable,
-                   state: State,
-                   file: String,
-                   function: String,
-                   line: Int
+    public init() { }
+
+    open func on(action: Dispatchable,
+                 state: State,
+                 file: String,
+                 function: String,
+                 line: Int
     ) {
 
     }
@@ -34,30 +38,26 @@ open class StatedMiddleware<State: RootStateType> {
 
 public class LoggingMiddleware: Middleware {
 
-    private var loggingExcludedActions = [Dispatchable.Type]()
+    var loggingExcludedActions = [Dispatchable.Type]()
 
-    public required init(loggingExcludedActions: [Dispatchable.Type]) {
+    public init(loggingExcludedActions: [Dispatchable.Type]) {
 
+        super.init()
         self.loggingExcludedActions = loggingExcludedActions
     }
 
-    override public func on(action: Dispatchable,
+    public override func on(action: Dispatchable,
                             file: String,
                             function: String,
                             line: Int) {
 
         if loggingExcludedActions.first(where: { $0 == type(of: action) }) == nil {
 
-            let log =
-                """
-                 ---ACTION---
-                 \(action)
-                 file: \(file):\(line)
-                 function: \(function)
-                 .
-                 """
-            print(log)
+            print("---ACTION---")
+            dump(action)
+            print("file: \(file):\(line)")
+            print("function: \(function)")
+            print(".")
         }
-
     }
 }
