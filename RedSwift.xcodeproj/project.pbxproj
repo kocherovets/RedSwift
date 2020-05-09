@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C31B3F3424672CC100F8CC7B /* AsyncIntercator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31B3F3324672CC100F8CC7B /* AsyncIntercator.swift */; };
 		C3709F25239C30E400CC8DD8 /* Framework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3709F1C239C30E300CC8DD8 /* Framework.framework */; };
 		C3709F2C239C30E400CC8DD8 /* FrameworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3709F2B239C30E400CC8DD8 /* FrameworkTests.swift */; };
 		C3709F2E239C30E400CC8DD8 /* Framework.h in Headers */ = {isa = PBXBuildFile; fileRef = C3709F1E239C30E400CC8DD8 /* Framework.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -95,6 +96,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C31B3F3324672CC100F8CC7B /* AsyncIntercator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncIntercator.swift; sourceTree = "<group>"; };
 		C3709F1C239C30E300CC8DD8 /* Framework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Framework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3709F1E239C30E400CC8DD8 /* Framework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Framework.h; sourceTree = "<group>"; };
 		C3709F1F239C30E400CC8DD8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 			children = (
 				C3DFBA5623786C0D003259FF /* TestStore.swift */,
 				C3DFBA5A23786C99003259FF /* CounterState.swift */,
+				C31B3F3324672CC100F8CC7B /* AsyncIntercator.swift */,
 				C3DFB9EC23786AFA003259FF /* ViewController.swift */,
 				C3DFB9E823786AFA003259FF /* AppDelegate.swift */,
 				C3DFB9EA23786AFA003259FF /* SceneDelegate.swift */,
@@ -516,6 +519,7 @@
 				C3DFB9ED23786AFA003259FF /* ViewController.swift in Sources */,
 				C3DFB9E923786AFA003259FF /* AppDelegate.swift in Sources */,
 				C3DFBA5723786C0D003259FF /* TestStore.swift in Sources */,
+				C31B3F3424672CC100F8CC7B /* AsyncIntercator.swift in Sources */,
 				C3DFBA5B23786C99003259FF /* CounterState.swift in Sources */,
 				C3DFB9EB23786AFA003259FF /* SceneDelegate.swift in Sources */,
 			);

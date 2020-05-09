@@ -15,10 +15,14 @@ class ViewController: UIViewController, StoreSubscriber {
     @IBOutlet weak var add150Button: UIButton!
     @IBOutlet weak var activityIndicatorV: UIActivityIndicatorView!
 
+    var interactor: AsyncInteractor?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         store.subscribe(self)
+        
+        interactor = AsyncInteractor(store: store)
     }
 
     func stateChanged(box: StateBox<St>) {
@@ -43,7 +47,7 @@ class ViewController: UIViewController, StoreSubscriber {
     }
 
     @IBAction func addAction150() {
-//        store.dispatch(RequestIncrementSE())
+        store.dispatch(AsyncInteractor.StartAction())
     }
 
 }

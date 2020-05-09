@@ -40,11 +40,35 @@ public extension SideEffect {
 
 public class InteractorLogger {
 
+    static var consoleLogger = ConsoleLogger()
+    
+    public static var loggingExcludedSideEffects = [AnySideEffect.Type]()
+
     public static var logger: ((AnySideEffect) -> ())? = { sideEffect in
 
-        print("---SE---")
-        dump(sideEffect)
-        print(".")
+        if loggingExcludedSideEffects.first(where: { $0 == type(of: sideEffect) }) == nil {
+
+            print("---SE---", to: &consoleLogger)
+            dump(sideEffect, to: &consoleLogger)
+            print(".", to: &consoleLogger)
+            consoleLogger.flush()
+        }
+    }
+}
+
+class ConsoleLogger: TextOutputStream
+{
+    var buffer = ""
+
+    func flush()
+    {
+        print(buffer)
+        buffer = ""
+    }
+
+    func write(_ string: String)
+    {
+        buffer += string
     }
 }
 

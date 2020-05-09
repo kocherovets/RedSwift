@@ -38,12 +38,18 @@ open class StatedMiddleware<State: RootStateType> {
 
 public class LoggingMiddleware: Middleware {
 
+    var consoleLogger = ConsoleLogger()
+
     var loggingExcludedActions = [Dispatchable.Type]()
 
-    public init(loggingExcludedActions: [Dispatchable.Type]) {
+    var firstPart: String?
+    var startIndex: String.Index?
+
+    public init(loggingExcludedActions: [Dispatchable.Type], firstPart: String? = nil) {
 
         super.init()
         self.loggingExcludedActions = loggingExcludedActions
+        self.firstPart = firstPart
     }
 
     public override func on(action: Dispatchable,
@@ -53,11 +59,32 @@ public class LoggingMiddleware: Middleware {
 
         if loggingExcludedActions.first(where: { $0 == type(of: action) }) == nil {
 
-            print("---ACTION---")
-            dump(action)
-            print("file: \(file):\(line)")
-            print("function: \(function)")
-            print(".")
+            let printFile: String
+            if startIndex == nil,
+                let firstPart = firstPart
+                {
+                let components = file.components(separatedBy: firstPart + "/")
+                if let component = components.last
+                    {
+                    startIndex = file.index(file.endIndex, offsetBy: -component.count - (firstPart + "/").count)
+                }
+            }
+            if let startIndex = startIndex
+                {
+                let substring = file[startIndex..<file.endIndex]
+                printFile = String(substring)
+            }
+            else
+            {
+                printFile = file
+            }
+
+            print("---ACTION---", to: &consoleLogger)
+            dump(action, to: &consoleLogger)
+            print("file: \(printFile):\(line)", to: &consoleLogger)
+            print("function: \(function)", to: &consoleLogger)
+            print(".", to: &consoleLogger)
+            consoleLogger.flush()
         }
     }
 }
