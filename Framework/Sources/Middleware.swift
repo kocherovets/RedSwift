@@ -62,7 +62,7 @@ public class LoggingMiddleware: Middleware {
             let printFile: String
             if startIndex == nil,
                 let firstPart = firstPart
-                {
+            {
                 let components = file.components(separatedBy: firstPart + "/")
                 if let component = components.last
                     {
@@ -70,7 +70,7 @@ public class LoggingMiddleware: Middleware {
                 }
             }
             if let startIndex = startIndex
-                {
+            {
                 let substring = file[startIndex..<file.endIndex]
                 printFile = String(substring)
             }

@@ -16,13 +16,16 @@ class ViewController: UIViewController, StoreSubscriber {
     @IBOutlet weak var activityIndicatorV: UIActivityIndicatorView!
 
     var interactor: AsyncInteractor?
+    var interactor2: AsyncInteractor2?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         store.subscribe(self)
         
+//        InteractorLogger.loggingExcludedSideEffects = [AsyncInteractor.AsyncSE.self]
         interactor = AsyncInteractor(store: store)
+        interactor2 = AsyncInteractor2(store: store)
     }
 
     func stateChanged(box: StateBox<St>) {
@@ -48,6 +51,10 @@ class ViewController: UIViewController, StoreSubscriber {
 
     @IBAction func addAction150() {
         store.dispatch(AsyncInteractor.StartAction())
+    }
+
+    @IBAction func addAction30() {
+        store.dispatch(AsyncInteractor2.StartAction())
     }
 
 }
