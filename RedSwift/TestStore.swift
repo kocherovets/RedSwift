@@ -41,9 +41,14 @@ let storeQueue = DispatchQueue(label: "queueTitle", qos: .userInteractive)
 var store = Store<St>(state: St(),
                       queue: storeQueue,
                       middleware: [
-                        LoggingMiddleware(loggingExcludedActions: [IncrementAction.self])
+                                   LoggingMiddleware(loggingExcludedActions: [IncrementAction.self])
                       ])
 
 class TestStore: Store<St> {
 
+}
+
+extension Action {
+
+    func updateState(_ state: inout St) { }
 }

@@ -50,11 +50,16 @@ class ViewController: UIViewController, StoreSubscriber {
     }
 
     @IBAction func addAction150() {
-        store.dispatch(AsyncInteractor.StartAction())
+        store.dispatch(AsyncInteractor.AsyncSE.StartAction())
     }
 
     @IBAction func addAction30() {
-        store.dispatch(AsyncInteractor2.StartAction())
+        store.dispatch(AsyncInteractor2.AsyncSE.StartAction())
+    }
+
+    @IBAction func deleteInteractors() {
+        interactor = nil
+        interactor2 = nil
     }
 
 }

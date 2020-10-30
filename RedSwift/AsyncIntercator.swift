@@ -19,15 +19,10 @@ class AsyncInteractor: Interactor<St>
 
 extension AsyncInteractor
 {
-    struct StartAction: Action
-    {        
-        func updateState(_ state: inout St)
-        {
-        }
-    }
-
     struct AsyncSE: SideEffect
     {
+        struct StartAction: Action { }
+
         func condition(box: StateBox<St>) -> Bool
         {
             box.lastAction is StartAction

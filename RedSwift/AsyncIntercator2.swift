@@ -1,8 +1,8 @@
 //
-//  AsyncIntercator.swift
+//  AsyncIntercator2.swift
 //  RedSwift
 //
-//  Created by Dmitry Kocherovets on 09.05.2020.
+//  Created by Dmitry Kocherovets on 10.08.2020.
 //  Copyright © 2020 Dmitry Kocherovets. All rights reserved.
 //
 
@@ -20,44 +20,35 @@ class AsyncInteractor2: Interactor<St>
     }
 }
 
-protocol QueuedSideEffect: SideEffect {
-}
+protocol QueuedSideEffect: SideEffect { }
 
-extension QueuedSideEffect {
+extension QueuedSideEffect
+{
     var queue: DispatchQueue? { serviceQueue }
 }
 
 extension AsyncInteractor2
 {
-    
-    struct StartAction: Action
-    {
-        func updateState(_ state: inout St)
-        {
-        }
-    }
-
     struct AsyncSE: QueuedSideEffect
     {
-        func condition(box: StateBox<St>) -> Bool
-        {
-            box.lastAction is StartAction
-        }
+        struct StartAction: Action { }
+
+        func condition(box: StateBox<St>) -> Bool { box.lastAction is StartAction }
 
         func execute(box: StateBox<St>, trunk: Trunk, interactor: AsyncInteractor2)
         {
             sleep(5)
             trunk.dispatch(SaveAsyncAction(value: 30))
         }
-    }
 
-    struct SaveAsyncAction: Action
-    {
-        let value: Int
-
-        func updateState(_ state: inout St)
+        struct SaveAsyncAction: Action
         {
-            state.counter.counter += value
+            let value: Int
+
+            func updateState(_ state: inout St)
+            {
+                state.counter.counter += value
+            }
         }
     }
 }

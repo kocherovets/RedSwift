@@ -35,15 +35,23 @@
                                     <action selector="addAction150" destination="r8Z-4Y-UAL" eventType="touchUpInside" id="oZ3-W4-W3Y"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="ng5-fx-VFD">
-                                <rect key="frame" x="197" y="288" width="20" height="20"/>
-                            </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rVe-w4-oPu">
                                 <rect key="frame" x="145" y="362" width="124" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Add 30 with delay"/>
                                 <connections>
                                     <action selector="addAction30" destination="r8Z-4Y-UAL" eventType="touchUpInside" id="I4I-Df-zes"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="ng5-fx-VFD">
+                                <rect key="frame" x="197" y="288" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UwS-On-iGt">
+                                <rect key="frame" x="145" y="484" width="123" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Delete interactors"/>
+                                <connections>
+                                    <action selector="deleteInteractors" destination="r8Z-4Y-UAL" eventType="touchUpInside" id="ub5-Sv-OBm"/>
                                 </connections>
                             </button>
                         </subviews>
