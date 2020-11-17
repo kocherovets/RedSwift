@@ -8,14 +8,6 @@
 
 import Foundation
 
-/**
- This class is the default implementation of the `Store` protocol. You will use this store in most
- of your applications. You shouldn't need to implement your own store.
- You initialize the store with a reducer and an initial application state. If your app has multiple
- reducers you can combine them by initializng a `MainReducer` with all of your reducers as an
- argument.
- */
-
 public struct AddSubscriberAction: Dispatchable { }
 
 open class Store<State: RootStateType>: StoreTrunk {
@@ -24,7 +16,7 @@ open class Store<State: RootStateType>: StoreTrunk {
 
     public var state: State { box.ref.val }
 
-    private var box: StateBox<State>
+    private(set) public var box: StateBox<State>
 
     var subscriptions: Set<SubscriptionType> = []
 
@@ -140,12 +132,12 @@ public struct StateBox<T> {
     
     var ref : Ref<T>
     
-    init(_ x : T) {
+    public init(_ x : T) {
         ref = Ref(x)
     }
     
     public var state: T { ref.val }
     
-    public var lastAction: Dispatchable?
+    fileprivate(set) public var lastAction: Dispatchable?
 }
 
