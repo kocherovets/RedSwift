@@ -22,29 +22,13 @@ open class Store<State: RootStateType>: StoreTrunk {
 
     typealias SubscriptionType = SubscriptionBox<State>
 
-    private var _state: State!
-    public var state: State { _state! }
+    public var state: State { box.ref.val }
 
-    private func set(state: State, lastAction: Dispatchable) {
-
-        let oldValue = _state ?? state
-        _state = state
-
-        self.lastAction = lastAction
-
-        subscriptions.forEach {
-            if $0.subscriber == nil {
-                subscriptions.remove($0)
-            } else {
-                $0.newValues(oldState: oldValue, newState: state, lastAction: lastAction)
-            }
-        }
-    }
+    private var box: StateBox<State>
 
     var subscriptions: Set<SubscriptionType> = []
 
     public let queue: DispatchQueue
-    public var lastAction: Dispatchable?
 
     private var middleware: [Middleware] = []
     private var statedMiddleware: [StatedMiddleware<State>] = []
@@ -52,16 +36,15 @@ open class Store<State: RootStateType>: StoreTrunk {
     private var throttleActions = [String: TimeInterval]()
 
     public required init(
-        state: State?,
+        state: State,
         queue: DispatchQueue,
         middleware: [Middleware] = [],
         statedMiddleware: [StatedMiddleware<State>] = []
     ) {
-
         self.queue = queue
         self.middleware = middleware
         self.statedMiddleware = statedMiddleware
-        self._state = state
+        self.box = StateBox(state)
     }
 
     public func subscribe<SelectedState, S: StoreSubscriber> (_ subscriber: S)
@@ -74,13 +57,11 @@ open class Store<State: RootStateType>: StoreTrunk {
 
         subscriptions.update(with: subscriptionBox)
 
-        if let state = self._state {
-            originalSubscription.newValues(oldState: nil, newState: state, lastAction: lastAction)
-        }
+        originalSubscription.newValues(box: box)
     }
 
     public func unsubscribe(_ subscriber: AnyStoreSubscriber) {
-
+        
         if let index = subscriptions.firstIndex(where: { return $0.subscriber === subscriber }) {
             subscriptions.remove(at: index)
         }
@@ -117,8 +98,18 @@ open class Store<State: RootStateType>: StoreTrunk {
 
             switch action {
             case let action as AnyAction:
-                self.set(state: action.updatedState(currentState: self.state) as! State,
-                         lastAction: action)
+                
+                action.updateState(box: self.box)
+                
+                self.box.lastAction = action
+                
+                self.subscriptions.forEach {
+                    if $0.subscriber == nil {
+                        self.subscriptions.remove($0)
+                    } else {
+                        $0.newValues(box: self.box)
+                    }
+                }
             default:
                 break
             }
@@ -139,3 +130,22 @@ extension Thread {
         }
     }
 }
+
+final class Ref<T> {
+  var val : T
+  init(_ v : T) {val = v}
+}
+
+public struct StateBox<T> {
+    
+    var ref : Ref<T>
+    
+    init(_ x : T) {
+        ref = Ref(x)
+    }
+    
+    public var state: T { ref.val }
+    
+    public var lastAction: Dispatchable?
+}
+
