@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import RedSwift
+
 class AsyncInteractor: Interactor<St>
 {
     override var sideEffects: [AnySideEffect]

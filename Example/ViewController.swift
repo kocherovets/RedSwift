@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RedSwift
 
 class ViewController: UIViewController, StoreSubscriber {
 

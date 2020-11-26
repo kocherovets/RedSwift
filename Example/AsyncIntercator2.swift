@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RedSwift
 
 private let serviceQueue = DispatchQueue(label: "AsyncInteractor2", qos: .background, attributes: [.concurrent])
 
