@@ -18,13 +18,13 @@
 		C3709F3E239C311C00CC8DD8 /* SideEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DFBA5E23786CC3003259FF /* SideEffects.swift */; };
 		C3709F3F239C311C00CC8DD8 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DFBA1A23786B41003259FF /* State.swift */; };
 		C3709F41239C311C00CC8DD8 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DFBA2623786B42003259FF /* Store.swift */; };
-		C3709F42239C311C00CC8DD8 /* StoreSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DFBA2723786B42003259FF /* StoreSubscriber.swift */; };
-		C3709F44239C311C00CC8DD8 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DFBA2423786B42003259FF /* Subscription.swift */; };
+		C3709F42239C311C00CC8DD8 /* StateSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DFBA2723786B42003259FF /* StateSubscriber.swift */; };
 		C3709F45239C312300CC8DD8 /* Coding.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DFBA1D23786B41003259FF /* Coding.swift */; };
 		C3709F46239C312300CC8DD8 /* Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DFBA1E23786B41003259FF /* Assertions.swift */; };
 		C3709F47239C312300CC8DD8 /* TypeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DFBA1F23786B41003259FF /* TypeHelper.swift */; };
 		C37B1F4E241E8372002DCE46 /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37B1F4D241E8372002DCE46 /* Interactor.swift */; };
 		C3CFC52A24E189E7007E069E /* AsyncIntercator2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CFC52924E189DA007E069E /* AsyncIntercator2.swift */; };
+		C3DF35AB259F8DF100182A07 /* GraphSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DF35AA259F8DF100182A07 /* GraphSubscription.swift */; };
 		C3DFB9E923786AFA003259FF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DFB9E823786AFA003259FF /* AppDelegate.swift */; };
 		C3DFB9EB23786AFA003259FF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DFB9EA23786AFA003259FF /* SceneDelegate.swift */; };
 		C3DFB9ED23786AFA003259FF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DFB9EC23786AFA003259FF /* ViewController.swift */; };
@@ -103,6 +103,7 @@
 		C3709F2D239C30E400CC8DD8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C37B1F4D241E8372002DCE46 /* Interactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Interactor.swift; sourceTree = "<group>"; };
 		C3CFC52924E189DA007E069E /* AsyncIntercator2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncIntercator2.swift; sourceTree = "<group>"; };
+		C3DF35AA259F8DF100182A07 /* GraphSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphSubscription.swift; sourceTree = "<group>"; };
 		C3DFB9E523786AFA003259FF /* RedSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3DFB9E823786AFA003259FF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C3DFB9EA23786AFA003259FF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -123,9 +124,8 @@
 		C3DFBA1F23786B41003259FF /* TypeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeHelper.swift; sourceTree = "<group>"; };
 		C3DFBA2123786B41003259FF /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		C3DFBA2223786B41003259FF /* Middleware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Middleware.swift; sourceTree = "<group>"; };
-		C3DFBA2423786B42003259FF /* Subscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
 		C3DFBA2623786B42003259FF /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
-		C3DFBA2723786B42003259FF /* StoreSubscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreSubscriber.swift; sourceTree = "<group>"; };
+		C3DFBA2723786B42003259FF /* StateSubscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateSubscriber.swift; sourceTree = "<group>"; };
 		C3DFBA5623786C0D003259FF /* TestStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestStore.swift; sourceTree = "<group>"; };
 		C3DFBA5A23786C99003259FF /* CounterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterState.swift; sourceTree = "<group>"; };
 		C3DFBA5E23786CC3003259FF /* SideEffects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideEffects.swift; sourceTree = "<group>"; };
@@ -260,8 +260,8 @@
 				C3DFBA2223786B41003259FF /* Middleware.swift */,
 				C37B1F4D241E8372002DCE46 /* Interactor.swift */,
 				C3DFBA1A23786B41003259FF /* State.swift */,
-				C3DFBA2723786B42003259FF /* StoreSubscriber.swift */,
-				C3DFBA2423786B42003259FF /* Subscription.swift */,
+				C3DFBA2723786B42003259FF /* StateSubscriber.swift */,
+				C3DF35AA259F8DF100182A07 /* GraphSubscription.swift */,
 				C3DFBA1C23786B41003259FF /* Utils */,
 			);
 			path = Sources;
@@ -481,12 +481,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C3709F42239C311C00CC8DD8 /* StoreSubscriber.swift in Sources */,
+				C3709F42239C311C00CC8DD8 /* StateSubscriber.swift in Sources */,
 				C3709F3E239C311C00CC8DD8 /* SideEffects.swift in Sources */,
 				C3709F45239C312300CC8DD8 /* Coding.swift in Sources */,
 				C3709F46239C312300CC8DD8 /* Assertions.swift in Sources */,
 				C3709F3C239C311C00CC8DD8 /* Middleware.swift in Sources */,
-				C3709F44239C311C00CC8DD8 /* Subscription.swift in Sources */,
+				C3DF35AB259F8DF100182A07 /* GraphSubscription.swift in Sources */,
 				C3709F41239C311C00CC8DD8 /* Store.swift in Sources */,
 				C3709F3A239C311C00CC8DD8 /* Action.swift in Sources */,
 				C3709F3F239C311C00CC8DD8 /* State.swift in Sources */,

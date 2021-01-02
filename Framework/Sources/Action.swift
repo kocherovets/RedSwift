@@ -10,19 +10,21 @@ import Foundation
 
 public protocol Dispatchable { }
 
-public protocol AnyAction: Dispatchable {
+public protocol Action: Dispatchable { }
+
+public protocol AnyActionWithUpdater: Dispatchable {
 
     func updateState(box: Any)
 }
 
-public protocol Action: AnyAction {
+public protocol ActionWithUpdater: AnyActionWithUpdater {
 
     associatedtype State: StateType
 
     func updateState(_ state: inout State)
 }
 
-public extension Action {
+public extension ActionWithUpdater {
 
     func updateState(box: Any) {
 

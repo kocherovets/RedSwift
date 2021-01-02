@@ -9,7 +9,6 @@
 import Foundation
 
 public protocol AnySideEffect {
-
     var queue: DispatchQueue? { get }
     var async: Bool { get }
 
@@ -19,67 +18,59 @@ public protocol AnySideEffect {
 }
 
 public protocol SideEffect: AnySideEffect {
-
     associatedtype SStateType
     associatedtype Interactor
-    
+
     func condition(box: StateBox<SStateType>) -> Bool
 
     func execute(box: StateBox<SStateType>, trunk: Trunk, interactor: Interactor)
 }
 
 public extension SideEffect {
-
     var queue: DispatchQueue? { nil }
     var async: Bool { true }
 
     func condition(box: Any) -> Bool {
-
         return condition(box: box as! StateBox<SStateType>)
     }
 
     func execute(box: Any, trunk: Trunk, interactor: Any) {
-
         execute(box: box as! StateBox<SStateType>, trunk: trunk, interactor: interactor as! Interactor)
     }
 }
 
 public class InteractorLogger {
-
     static var consoleLogger = ConsoleLogger()
 
     public static var loggingExcludedSideEffects = [AnySideEffect.Type]()
 
-    public static var logger: ((AnySideEffect) -> ())? = { sideEffect in
+    public static var logger: ((AnySideEffect) -> Void)? = { sideEffect in
 
-        if loggingExcludedSideEffects.first(where: { $0 == type(of: sideEffect) }) == nil
-        {
-            print("---SE---", to: &consoleLogger)
-            dump(sideEffect, to: &consoleLogger, maxItems: 20)
-            print(".", to: &consoleLogger)
-            consoleLogger.flush()
-        }
+        #if DEBUG
+            if loggingExcludedSideEffects.first(where: { $0 == type(of: sideEffect) }) == nil {
+                print("---SE---", to: &consoleLogger)
+                dump(sideEffect, to: &consoleLogger, maxItems: 20)
+                print(".", to: &consoleLogger)
+                consoleLogger.flush()
+            }
+        #endif
     }
 }
 
-class ConsoleLogger: TextOutputStream
-{
+class ConsoleLogger: TextOutputStream {
     var buffer = ""
 
-    func flush()
-    {
+    func flush() {
         print(buffer)
         buffer = ""
     }
 
-    func write(_ string: String)
-    {
+    func write(_ string: String) {
         buffer += string
     }
 }
 
-open class Interactor<State: RootStateType>: StoreSubscriber, Trunk {
-
+open class Interactor<State: StateType>: StateSubscriber, Trunk {
     private var store: Store<State>
     public var storeTrunk: StoreTrunk { store }
     public var state: State { store.state }
@@ -87,7 +78,6 @@ open class Interactor<State: RootStateType>: StoreSubscriber, Trunk {
     open var sideEffects: [AnySideEffect] { [] }
 
     public init(store: Store<State>) {
-
         self.store = store
         store.subscribe(self)
 
@@ -95,7 +85,6 @@ open class Interactor<State: RootStateType>: StoreSubscriber, Trunk {
     }
 
     open func onInit() {
-
     }
 
     deinit {
@@ -103,12 +92,11 @@ open class Interactor<State: RootStateType>: StoreSubscriber, Trunk {
     }
 
     public func stateChanged(box: StateBox<State>) {
-
         if condition(box: box) {
             for sideEffect in sideEffects {
                 if sideEffect.condition(box: box) {
                     InteractorLogger.logger?(sideEffect)
-                    
+
                     if sideEffect.queue == nil {
                         sideEffect.execute(box: box, trunk: self, interactor: self)
                     } else {
@@ -128,7 +116,6 @@ open class Interactor<State: RootStateType>: StoreSubscriber, Trunk {
     }
 
     open func condition(box: Any) -> Bool {
-
         return true
     }
 }

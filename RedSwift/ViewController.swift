@@ -8,12 +8,11 @@
 
 import UIKit
 
-class ViewController: UIViewController, StoreSubscriber {
-
-    @IBOutlet weak var companyNameLabel: UILabel!
-    @IBOutlet weak var add1Button: UIButton!
-    @IBOutlet weak var add150Button: UIButton!
-    @IBOutlet weak var activityIndicatorV: UIActivityIndicatorView!
+class ViewController: UIViewController, StateSubscriber, GraphSubscriber {
+    @IBOutlet var companyNameLabel: UILabel!
+    @IBOutlet var add1Button: UIButton!
+    @IBOutlet var add150Button: UIButton!
+    @IBOutlet var activityIndicatorV: UIActivityIndicatorView!
 
     var interactor: AsyncInteractor?
     var interactor2: AsyncInteractor2?
@@ -22,14 +21,23 @@ class ViewController: UIViewController, StoreSubscriber {
         super.viewDidLoad()
 
         store.subscribe(self)
-        
+
+        store.graphSubscribe(self)
+
 //        InteractorLogger.loggingExcludedSideEffects = [AsyncInteractor.AsyncSE.self]
         interactor = AsyncInteractor(store: store)
         interactor2 = AsyncInteractor2(store: store)
     }
 
-    func stateChanged(box: StateBox<St>) {
+//    func graphChanged(graph: AppCounterGraph) {
+//        print(graph.counter)
+//    }
 
+    func graphChanged(graph: AppCounterGraph & AppTestGraph) {
+        print(graph.counter)
+    }
+
+    func stateChanged(box: StateBox<St>) {
         DispatchQueue.main.async {
             self.companyNameLabel.text = "\(box.state.counter.counter)"
 
@@ -51,6 +59,7 @@ class ViewController: UIViewController, StoreSubscriber {
 
     @IBAction func addAction150() {
         store.dispatch(AsyncInteractor.AsyncSE.StartAction())
+//        (store.graph as! AppCounterGraph).set(counter: 10)
     }
 
     @IBAction func addAction30() {
@@ -61,6 +70,4 @@ class ViewController: UIViewController, StoreSubscriber {
         interactor = nil
         interactor2 = nil
     }
-
 }
-

@@ -8,4 +8,4 @@
 
 public protocol StateType { }
 
-public protocol RootStateType: StateType { }
+//public protocol RootStateType: StateType { }

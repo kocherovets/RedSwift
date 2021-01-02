@@ -8,17 +8,23 @@
 
 import Foundation
 
-public struct AddSubscriberAction: Dispatchable { }
+public protocol StoreType {
+    func subscribe<S: GraphSubscriber>(_ subscriber: S)
 
-open class Store<State: RootStateType>: StoreTrunk {
+    func unsubscribe(_ subscriber: AnyStateSubscriber)
+}
 
-    typealias SubscriptionType = SubscriptionBox<State>
+open class Store<State: StateType>: StoreTrunk {
+//    typealias SubscriptionType = StateSubscriptionBox<State>
 
     public var state: State { box.ref.val }
 
-    private(set) public var box: StateBox<State>
+    public private(set) var box: StateBox<State>
+    public private(set) var graph: GraphType?
 
-    var subscriptions: Set<SubscriptionType> = []
+    var stateSubscriptions: Set<StateSubscriptionBox> = []
+//    var stateAndGraphSubscriptions: Set<SubscriptionType> = []
+    var graphSubscriptions: Set<GraphSubscriptionBox> = []
 
     public let queue: DispatchQueue
 
@@ -31,31 +37,54 @@ open class Store<State: RootStateType>: StoreTrunk {
         state: State,
         queue: DispatchQueue,
         middleware: [Middleware] = [],
-        statedMiddleware: [StatedMiddleware<State>] = []
+        statedMiddleware: [StatedMiddleware<State>] = [],
+        graph: ((Store<State>) -> (GraphType?))? = nil
     ) {
         self.queue = queue
         self.middleware = middleware
         self.statedMiddleware = statedMiddleware
-        self.box = StateBox(state)
+        box = StateBox(state)
+        self.graph = graph?(self)
     }
 
-    public func subscribe<SelectedState, S: StoreSubscriber> (_ subscriber: S)
-    where S.StoreSubscriberStateType == SelectedState
-    {
-        let originalSubscription = Subscription<State>()
+    public func graphSubscribe<S: GraphSubscriber>(_ subscriber: S) {
+        let subscriptionBox = GraphSubscriptionBox(subscriber: subscriber)
 
-        let subscriptionBox = SubscriptionBox(originalSubscription: originalSubscription,
-                                              subscriber: subscriber)
+        graphSubscriptions.update(with: subscriptionBox)
 
-        subscriptions.update(with: subscriptionBox)
+        queue.async { [weak self] in
+            guard let self = self else { fatalError() }
 
-        originalSubscription.newValues(box: box)
+            if let graph = self.graph {
+                subscriber.graphChanged(graph: graph)
+            }
+        }
     }
 
-    public func unsubscribe(_ subscriber: AnyStoreSubscriber) {
-        
-        if let index = subscriptions.firstIndex(where: { return $0.subscriber === subscriber }) {
-            subscriptions.remove(at: index)
+    public func subscribe<S: StateSubscriber>(_ subscriber: S) {
+        let subscriptionBox = StateSubscriptionBox(subscriber: subscriber)
+
+        stateSubscriptions.update(with: subscriptionBox)
+
+        queue.async { [weak self] in
+            guard let self = self else { fatalError() }
+
+            subscriber.stateChanged(box: self.box)
+        }
+    }
+
+    public func unsubscribe(_ subscriber: StoreSubscriberType) {
+        switch subscriber {
+        case let subscriber as AnyStateSubscriber:
+            if let index = stateSubscriptions.firstIndex(where: { $0.subscriber === subscriber }) {
+                stateSubscriptions.remove(at: index)
+            }
+        case let subscriber as AnyGraphSubscriber:
+            if let index = graphSubscriptions.firstIndex(where: { $0.subscriber === subscriber }) {
+                graphSubscriptions.remove(at: index)
+            }
+        default:
+            fatalError()
         }
     }
 
@@ -63,14 +92,13 @@ open class Store<State: RootStateType>: StoreTrunk {
                          file: String = #file,
                          function: String = #function,
                          line: Int = #line) {
-
-        if let throttleAction = action as? ThrottleAction
-        {
+        if let throttleAction = action as? ThrottleAction {
             if
                 let interval = throttleActions["\(action)"],
-                Date().timeIntervalSince1970 - interval < throttleAction.interval
-            {
-                print("throttleAction \(action)")
+                Date().timeIntervalSince1970 - interval < throttleAction.interval {
+                #if DEBUG
+                    print("throttleAction \(action)")
+                #endif
                 return
             }
             throttleActions["\(action)"] = Date().timeIntervalSince1970
@@ -89,19 +117,29 @@ open class Store<State: RootStateType>: StoreTrunk {
             }
 
             switch action {
-            case let action as AnyAction:
-                
+            case let action as AnyActionWithUpdater:
+
                 action.updateState(box: self.box)
-                
+
                 self.box.lastAction = action
-                
-                self.subscriptions.forEach {
+
+                self.stateSubscriptions.forEach {
                     if $0.subscriber == nil {
-                        self.subscriptions.remove($0)
+                        self.stateSubscriptions.remove($0)
                     } else {
-                        $0.newValues(box: self.box)
+                        $0.subscriber?.stateChanged(box: self.box)
                     }
                 }
+                if let graph = self.graph {
+                    self.graphSubscriptions.forEach {
+                        if $0.subscriber == nil {
+                            self.graphSubscriptions.remove($0)
+                        } else {
+                            $0.subscriber?.graphChanged(graph: graph)
+                        }
+                    }
+                }
+
             default:
                 break
             }
@@ -110,7 +148,6 @@ open class Store<State: RootStateType>: StoreTrunk {
 }
 
 extension Thread {
-
     var threadName: String {
         if let currentOperationQueue = OperationQueue.current?.name {
             return "OperationQueue: \(currentOperationQueue)"
@@ -124,20 +161,20 @@ extension Thread {
 }
 
 final class Ref<T> {
-  var val : T
-  init(_ v : T) {val = v}
+    var val: T
+    init(_ v: T) { val = v }
 }
 
 public struct StateBox<T> {
-    
-    var ref : Ref<T>
-    
-    public init(_ x : T) {
+    var ref: Ref<T>
+
+    public init(_ x: T) {
         ref = Ref(x)
     }
-    
+
     public var state: T { ref.val }
-    
-    fileprivate(set) public var lastAction: Dispatchable?
+
+    public fileprivate(set) var lastAction: Dispatchable?
 }
 
+public protocol GraphType {}

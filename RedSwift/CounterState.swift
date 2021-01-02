@@ -12,38 +12,40 @@ struct APIError {
 }
 
 struct CounterState: StateType, Equatable {
-
     var counter: Int = 0
     var incrementRequested = false
 }
 
 struct IncrementAction: Action, ThrottleAction {
-
     func updateState(_ state: inout St) {
         state.counter.counter += 1
     }
 }
 
-struct AddAction: Action {
-
+struct SetCounterAction: Action, ThrottleAction {
     let value: Int
 
     func updateState(_ state: inout St) {
+        state.counter.counter = value
+    }
+}
 
+struct AddAction: Action {
+    let value: Int
+
+    func updateState(_ state: inout St) {
         state.counter.counter += value
         state.counter.incrementRequested = false
     }
 }
 
 struct RequestIncrementAction: Action {
-
     func updateState(_ state: inout St) {
-
         state.counter.incrementRequested = true
     }
 }
 
-//struct RequestIncrementSE: SideEffect {
+// struct RequestIncrementSE: SideEffect {
 //
 //    func sideEffect(state: St, trunk: Trunk, dependencies: DependencyContainer) {
 //
@@ -53,4 +55,4 @@ struct RequestIncrementAction: Action {
 //            trunk.dispatch(AddAction(value: value))
 //        }
 //    }
-//}
+// }
