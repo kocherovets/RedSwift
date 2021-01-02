@@ -1,11 +1,3 @@
-//
-//  GraphSubscription.swift
-//  Framework
-//
-//  Created by Dmitry Kocherovets on 01.01.2021.
-//  Copyright © 2021 Dmitry Kocherovets. All rights reserved.
-//
-
 public protocol AnyGraphSubscriber: class, StoreSubscriberType {
     func graphChanged(graph: Any)
 }

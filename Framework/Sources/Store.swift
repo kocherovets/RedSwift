@@ -1,27 +1,18 @@
-//
-//  Store.swift
-//  ReSwift
-//
-//  Created by Benjamin Encz on 11/11/15.
-//  Copyright © 2015 DigiTales. All rights reserved.
-//
-
 import Foundation
 
-public protocol StoreType {
-    func subscribe<S: GraphSubscriber>(_ subscriber: S)
-
-    func unsubscribe(_ subscriber: AnyStateSubscriber)
-}
+public typealias Reducer<ReducerStateType> = (_ action: Action, _ state: ReducerStateType?) -> ReducerStateType
 
 open class Store<State: StateType>: StoreTrunk {
-//    typealias SubscriptionType = StateSubscriptionBox<State>
+    typealias SubscriptionType = SubscriptionBox<State>
+
+    private var reducer: Reducer<State>?
 
     public var state: State { box.ref.val }
 
     public private(set) var box: StateBox<State>
     public private(set) var graph: GraphType?
 
+    var subscriptions: Set<SubscriptionType> = []
     var stateSubscriptions: Set<StateSubscriptionBox> = []
 //    var stateAndGraphSubscriptions: Set<SubscriptionType> = []
     var graphSubscriptions: Set<GraphSubscriptionBox> = []
@@ -38,13 +29,15 @@ open class Store<State: StateType>: StoreTrunk {
         queue: DispatchQueue,
         middleware: [Middleware] = [],
         statedMiddleware: [StatedMiddleware<State>] = [],
-        graph: ((Store<State>) -> (GraphType?))? = nil
+        graph: ((Store<State>) -> (GraphType?))? = nil,
+        reducer: Reducer<State>? = nil
     ) {
         self.queue = queue
         self.middleware = middleware
         self.statedMiddleware = statedMiddleware
         box = StateBox(state)
         self.graph = graph?(self)
+        self.reducer = reducer
     }
 
     public func graphSubscribe<S: GraphSubscriber>(_ subscriber: S) {
@@ -92,6 +85,27 @@ open class Store<State: StateType>: StoreTrunk {
                          file: String = #file,
                          function: String = #function,
                          line: Int = #line) {
+        if let action = action as? Action {
+            queue.async { [weak self] in
+
+                guard let self = self else { fatalError() }
+
+                let oldState = self.box.ref.val
+                self.box.ref.val = self.reducer!(action, self.box.state)
+
+                self.box.lastAction = action
+
+                self.subscriptions.forEach {
+                    if $0.subscriber == nil {
+                        self.subscriptions.remove($0)
+                    } else {
+                        $0.newValues(oldState: oldState, newState: self.box.ref.val)
+                    }
+                }
+            }
+            return
+        }
+
         if let throttleAction = action as? ThrottleAction {
             if
                 let interval = throttleActions["\(action)"],
