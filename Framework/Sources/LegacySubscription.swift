@@ -208,7 +208,7 @@ extension Store {
         subscriptions.update(with: subscriptionBox)
 
 //        if let state = self.state {
-            originalSubscription.newValues(oldState: nil, newState: self.state)
+        originalSubscription.newValues(oldState: nil, newState: state)
 //        }
     }
 

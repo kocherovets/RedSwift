@@ -17,8 +17,7 @@ open class Middleware {
                  file: String,
                  function: String,
                  line: Int
-    ) {
-    }
+    ) { }
 }
 
 open class StatedMiddleware<State: StateType> {
@@ -29,8 +28,7 @@ open class StatedMiddleware<State: StateType> {
                  file: String,
                  function: String,
                  line: Int
-    ) {
-    }
+    ) { }
 }
 
 public class LoggingMiddleware: Middleware {

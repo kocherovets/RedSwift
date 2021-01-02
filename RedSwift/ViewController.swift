@@ -66,8 +66,8 @@ class ViewController: UIViewController, StateSubscriber, GraphSubscriber, StoreS
     }
 
     @IBAction func addAction150() {
-        store.dispatch(LegacyAction.increment)
-//        store.dispatch(AsyncInteractor.AsyncSE.StartAction())
+//        store.dispatch(LegacyAction.increment)
+        store.dispatch(AsyncInteractor.AsyncSE.StartAction())
 //        (store.graph as! AppCounterGraph).set(counter: 10)
     }
 

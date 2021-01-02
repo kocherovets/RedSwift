@@ -23,14 +23,16 @@ extension AsyncInteractor
     {
         struct StartAction: Action { }
 
+        var hooks: [AnyActionWithUpdater.Type]? { [IncrementAction.self] }
+        
         func condition(box: StateBox<St>) -> Bool
         {
-            box.lastAction is StartAction
+            true //box.lastAction is StartAction
         }
 
         func execute(box: StateBox<St>, trunk: Trunk, interactor: AsyncInteractor)
         {
-            delay(5)
+            delay(1)
             {
                 trunk.dispatch(SaveAsyncAction(value: 150))
             }

@@ -4,6 +4,8 @@ public protocol AnySideEffect {
     var queue: DispatchQueue? { get }
     var async: Bool { get }
 
+    var hooks: [AnyActionWithUpdater.Type]? { get }
+
     func condition(box: Any) -> Bool
 
     func execute(box: Any, trunk: Trunk, interactor: Any)
@@ -13,6 +15,8 @@ public protocol SideEffect: AnySideEffect {
     associatedtype SStateType
     associatedtype Interactor
 
+    var hooks: [AnyActionWithUpdater.Type]? { get }
+
     func condition(box: StateBox<SStateType>) -> Bool
 
     func execute(box: StateBox<SStateType>, trunk: Trunk, interactor: Interactor)
@@ -21,6 +25,8 @@ public protocol SideEffect: AnySideEffect {
 public extension SideEffect {
     var queue: DispatchQueue? { nil }
     var async: Bool { true }
+
+    var hooks: [AnyActionWithUpdater.Type]? { nil }
 
     func condition(box: Any) -> Bool {
         return condition(box: box as! StateBox<SStateType>)
@@ -62,7 +68,13 @@ class ConsoleLogger: TextOutputStream {
     }
 }
 
-open class Interactor<State: StateType>: StateSubscriber, Trunk {
+protocol SideEffectProcessor {
+    associatedtype State: StateType
+
+    func processSideEffect(sideEffect: AnySideEffect, box: StateBox<State>)
+}
+
+open class Interactor<State: StateType>: StateSubscriber, SideEffectSubscriber, Trunk, SideEffectProcessor {
     private var store: Store<State>
     public var storeTrunk: StoreTrunk { store }
     public var state: State { store.state }
@@ -71,7 +83,21 @@ open class Interactor<State: StateType>: StateSubscriber, Trunk {
 
     public init(store: Store<State>) {
         self.store = store
-        store.stateSubscribe(self)
+
+        var subscribeInteractor = false
+        for sideEffect in sideEffects {
+            guard let hooks = sideEffect.hooks else {
+                subscribeInteractor = true
+                continue
+            }
+            for hook in hooks {
+                store.sideEffectSubscribe(self, action: "\(hook)", sideEffectKey: key(sideEffect: sideEffect))
+            }
+        }
+
+        if subscribeInteractor {
+            store.stateSubscribe(self)
+        }
 
         onInit()
     }
@@ -86,21 +112,35 @@ open class Interactor<State: StateType>: StateSubscriber, Trunk {
     public func stateChanged(box: StateBox<State>) {
         if condition(box: box) {
             for sideEffect in sideEffects {
-                if sideEffect.condition(box: box) {
-                    InteractorLogger.logger?(sideEffect)
+                guard sideEffect.hooks == nil else { continue }
 
-                    if sideEffect.queue == nil {
+                processSideEffect(sideEffect: sideEffect, box: box)
+            }
+        }
+    }
+
+    public func stateChanged(sideEffectKey: String, box: StateBox<State>) {
+        for sideEffect in sideEffects {
+            guard sideEffectKey == key(sideEffect: sideEffect) else { continue }
+            processSideEffect(sideEffect: sideEffect, box: box)
+            return
+        }
+    }
+
+    public func processSideEffect(sideEffect: AnySideEffect, box: StateBox<State>) {
+        if sideEffect.condition(box: box) {
+            InteractorLogger.logger?(sideEffect)
+
+            if sideEffect.queue == nil {
+                sideEffect.execute(box: box, trunk: self, interactor: self)
+            } else {
+                if sideEffect.async {
+                    sideEffect.queue?.async {
                         sideEffect.execute(box: box, trunk: self, interactor: self)
-                    } else {
-                        if sideEffect.async {
-                            sideEffect.queue?.async {
-                                sideEffect.execute(box: box, trunk: self, interactor: self)
-                            }
-                        } else {
-                            sideEffect.queue?.sync {
-                                sideEffect.execute(box: box, trunk: self, interactor: self)
-                            }
-                        }
+                    }
+                } else {
+                    sideEffect.queue?.sync {
+                        sideEffect.execute(box: box, trunk: self, interactor: self)
                     }
                 }
             }
@@ -109,5 +149,9 @@ open class Interactor<State: StateType>: StateSubscriber, Trunk {
 
     open func condition(box: Any) -> Bool {
         return true
+    }
+
+    func key(sideEffect: AnySideEffect) -> String {
+        "\(sideEffect)"
     }
 }
