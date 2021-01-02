@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, StateSubscriber, GraphSubscriber {
+class ViewController: UIViewController, StateSubscriber, GraphSubscriber, StoreSubscriber {
     @IBOutlet var companyNameLabel: UILabel!
     @IBOutlet var add1Button: UIButton!
     @IBOutlet var add150Button: UIButton!
@@ -20,7 +20,9 @@ class ViewController: UIViewController, StateSubscriber, GraphSubscriber {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        store.subscribe(self)
+        store.subscribe(self) { $0.select { $0.legacy }.skipRepeats() }
+
+        store.stateSubscribe(self)
 
         store.graphSubscribe(self)
 
@@ -39,7 +41,7 @@ class ViewController: UIViewController, StateSubscriber, GraphSubscriber {
 
     func stateChanged(box: StateBox<St>) {
         DispatchQueue.main.async {
-            self.companyNameLabel.text = "\(box.state.counter.counter)"
+            self.companyNameLabel.text = "\(box.state.counter.counter), \(box.state.legacy.legacyCounter)"
 
             if box.state.counter.incrementRequested {
                 self.activityIndicatorV.startAnimating()
@@ -53,12 +55,19 @@ class ViewController: UIViewController, StateSubscriber, GraphSubscriber {
         }
     }
 
+    func newState(state: LegacyState) {
+        DispatchQueue.main.async {
+            self.companyNameLabel.text = "\(state.legacyCounter)"
+        }
+    }
+
     @IBAction func addAction1() {
         store.dispatch(IncrementAction())
     }
 
     @IBAction func addAction150() {
-        store.dispatch(AsyncInteractor.AsyncSE.StartAction())
+        store.dispatch(LegacyAction.increment)
+//        store.dispatch(AsyncInteractor.AsyncSE.StartAction())
 //        (store.graph as! AppCounterGraph).set(counter: 10)
     }
 

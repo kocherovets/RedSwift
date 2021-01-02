@@ -26,6 +26,7 @@
 		C3CFC52A24E189E7007E069E /* AsyncIntercator2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CFC52924E189DA007E069E /* AsyncIntercator2.swift */; };
 		C3DF35AB259F8DF100182A07 /* GraphSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DF35AA259F8DF100182A07 /* GraphSubscription.swift */; };
 		C3DF38BD25A0D22300182A07 /* LegacySubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DF38BC25A0D22300182A07 /* LegacySubscription.swift */; };
+		C3DF38C725A0DB4B00182A07 /* LegacyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DF38C625A0DB4B00182A07 /* LegacyState.swift */; };
 		C3DFB9E923786AFA003259FF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DFB9E823786AFA003259FF /* AppDelegate.swift */; };
 		C3DFB9EB23786AFA003259FF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DFB9EA23786AFA003259FF /* SceneDelegate.swift */; };
 		C3DFB9ED23786AFA003259FF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DFB9EC23786AFA003259FF /* ViewController.swift */; };
@@ -106,6 +107,7 @@
 		C3CFC52924E189DA007E069E /* AsyncIntercator2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncIntercator2.swift; sourceTree = "<group>"; };
 		C3DF35AA259F8DF100182A07 /* GraphSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphSubscription.swift; sourceTree = "<group>"; };
 		C3DF38BC25A0D22300182A07 /* LegacySubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacySubscription.swift; sourceTree = "<group>"; };
+		C3DF38C625A0DB4B00182A07 /* LegacyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyState.swift; sourceTree = "<group>"; };
 		C3DFB9E523786AFA003259FF /* RedSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3DFB9E823786AFA003259FF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C3DFB9EA23786AFA003259FF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 			children = (
 				C3DFBA5623786C0D003259FF /* TestStore.swift */,
 				C3DFBA5A23786C99003259FF /* CounterState.swift */,
+				C3DF38C625A0DB4B00182A07 /* LegacyState.swift */,
 				C31B3F3324672CC100F8CC7B /* AsyncIntercator.swift */,
 				C3CFC52924E189DA007E069E /* AsyncIntercator2.swift */,
 				C3DFB9EC23786AFA003259FF /* ViewController.swift */,
@@ -513,6 +516,7 @@
 			files = (
 				C3DFB9ED23786AFA003259FF /* ViewController.swift in Sources */,
 				C3DFB9E923786AFA003259FF /* AppDelegate.swift in Sources */,
+				C3DF38C725A0DB4B00182A07 /* LegacyState.swift in Sources */,
 				C3CFC52A24E189E7007E069E /* AsyncIntercator2.swift in Sources */,
 				C3DFBA5723786C0D003259FF /* TestStore.swift in Sources */,
 				C31B3F3424672CC100F8CC7B /* AsyncIntercator.swift in Sources */,

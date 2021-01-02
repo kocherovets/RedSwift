@@ -71,7 +71,7 @@ open class Interactor<State: StateType>: StateSubscriber, Trunk {
 
     public init(store: Store<State>) {
         self.store = store
-        store.subscribe(self)
+        store.stateSubscribe(self)
 
         onInit()
     }

@@ -14,13 +14,14 @@ func delay(_ delay: Double, closure: @escaping () -> Void) {
     DispatchQueue.main.asyncAfter(deadline: when, execute: closure)
 }
 
-struct TestState: StateType {
+struct TestState: StateType, Equatable {
     var companyName: String = "test"
 }
 
-struct St: StateType {
+struct St: StateType, Equatable {
     var test = TestState()
     var counter = CounterState()
+    var legacy = LegacyState()
 }
 
 class APIManager {
@@ -30,10 +31,6 @@ class APIManager {
         }
     }
 }
-
-// class DependencyContainer: SideEffectDependencyContainer {
-//    let api = APIManager()
-// }
 
 protocol AppCounterGraph: GraphType {
     var counter: Int { get }
@@ -74,12 +71,21 @@ extension Graph: AppTestGraph {
 
 let storeQueue = DispatchQueue(label: "queueTitle", qos: .userInteractive)
 
+func appReducer(action: Framework.Action, state: St?) -> St {
+    return St(
+        test: state?.test ?? TestState(),
+        counter: state?.counter ?? CounterState(),
+        legacy: legacyReducer(action: action, state: state?.legacy)
+    )
+}
+
 var store = Store<St>(state: St(),
                       queue: storeQueue,
                       middleware: [
-                          LoggingMiddleware(loggingExcludedActions: [IncrementAction.self]),
+                          LoggingMiddleware(loggingExcludedActions: []),
                       ],
-                      graph: { store in Graph(store: store) })
+                      graph: { store in Graph(store: store) },
+                      reducer: appReducer)
 
 class TestStore: Store<St> {
 }

@@ -54,7 +54,7 @@ open class Store<State: StateType>: StoreTrunk {
         }
     }
 
-    public func subscribe<S: StateSubscriber>(_ subscriber: S) {
+    public func stateSubscribe<S: StateSubscriber>(_ subscriber: S) {
         let subscriptionBox = StateSubscriptionBox(subscriber: subscriber)
 
         stateSubscriptions.update(with: subscriptionBox)
@@ -85,27 +85,6 @@ open class Store<State: StateType>: StoreTrunk {
                          file: String = #file,
                          function: String = #function,
                          line: Int = #line) {
-        if let action = action as? Action {
-            queue.async { [weak self] in
-
-                guard let self = self else { fatalError() }
-
-                let oldState = self.box.ref.val
-                self.box.ref.val = self.reducer!(action, self.box.state)
-
-                self.box.lastAction = action
-
-                self.subscriptions.forEach {
-                    if $0.subscriber == nil {
-                        self.subscriptions.remove($0)
-                    } else {
-                        $0.newValues(oldState: oldState, newState: self.box.ref.val)
-                    }
-                }
-            }
-            return
-        }
-
         if let throttleAction = action as? ThrottleAction {
             if
                 let interval = throttleActions["\(action)"],
@@ -130,32 +109,42 @@ open class Store<State: StateType>: StoreTrunk {
                 middleware.on(action: action, state: self.state, file: file, function: function, line: line)
             }
 
+            var oldState: State?
             switch action {
+            case let action as Action:
+                oldState = self.box.ref.val
+                self.box.ref.val = self.reducer!(action, self.box.state)
+
             case let action as AnyActionWithUpdater:
-
                 action.updateState(box: self.box)
-
-                self.box.lastAction = action
-
-                self.stateSubscriptions.forEach {
-                    if $0.subscriber == nil {
-                        self.stateSubscriptions.remove($0)
-                    } else {
-                        $0.subscriber?.stateChanged(box: self.box)
-                    }
-                }
-                if let graph = self.graph {
-                    self.graphSubscriptions.forEach {
-                        if $0.subscriber == nil {
-                            self.graphSubscriptions.remove($0)
-                        } else {
-                            $0.subscriber?.graphChanged(graph: graph)
-                        }
-                    }
-                }
-
             default:
-                break
+                fatalError()
+            }
+
+            self.box.lastAction = action
+
+            self.subscriptions.forEach {
+                if $0.subscriber == nil {
+                    self.subscriptions.remove($0)
+                } else {
+                    $0.newValues(oldState: oldState ?? self.box.ref.val, newState: self.box.ref.val)
+                }
+            }
+            self.stateSubscriptions.forEach {
+                if $0.subscriber == nil {
+                    self.stateSubscriptions.remove($0)
+                } else {
+                    $0.subscriber?.stateChanged(box: self.box)
+                }
+            }
+            if let graph = self.graph {
+                self.graphSubscriptions.forEach {
+                    if $0.subscriber == nil {
+                        self.graphSubscriptions.remove($0)
+                    } else {
+                        $0.subscriber?.graphChanged(graph: graph)
+                    }
+                }
             }
         }
     }
