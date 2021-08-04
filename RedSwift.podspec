@@ -10,12 +10,14 @@ s.license = { :type => "MIT", :file => "LICENSE" }
 s.homepage = 'https://github.com/kocherovets/RedSwift'
 s.author = { 'Dmitry Kocherovets' => 'kocherovets@gmail.com' }
 
-s.version = "2.0.1"
+s.version = "3.0.1"
 s.source = { :git => 'https://github.com/kocherovets/RedSwift.git', :tag => s.version.to_s  }
 s.source_files = "Sources/**/*.{swift}"
 
 s.swift_version = "5.0"
 
 s.framework = "Foundation"
+
+s.dependency 'DeclarativeTVC'
 
 end
