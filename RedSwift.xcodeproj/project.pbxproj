@@ -41,6 +41,12 @@
 		C3C0B24926BB44A200171A04 /* StateSubscribtion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0B24126BB44A200171A04 /* StateSubscribtion.swift */; };
 		C3C0B24A26BB44A200171A04 /* Middleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0B24226BB44A200171A04 /* Middleware.swift */; };
 		C3C0B24B26BB44A200171A04 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0B24326BB44A200171A04 /* Store.swift */; };
+		C3C0B25326BB477300171A04 /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0B24D26BB477200171A04 /* Presenter.swift */; };
+		C3C0B25426BB477300171A04 /* GraphPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0B24E26BB477200171A04 /* GraphPresenter.swift */; };
+		C3C0B25526BB477300171A04 /* ReduxVMSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0B24F26BB477200171A04 /* ReduxVMSettings.swift */; };
+		C3C0B25626BB477300171A04 /* TVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0B25026BB477300171A04 /* TVC.swift */; };
+		C3C0B25726BB477300171A04 /* VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0B25126BB477300171A04 /* VC.swift */; };
+		C3C0B25826BB477300171A04 /* CVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0B25226BB477300171A04 /* CVC.swift */; };
 		OBJ_54 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 		OBJ_65 /* RedSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_23 /* RedSwiftTests.swift */; };
 		OBJ_66 /* XCTestManifests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_24 /* XCTestManifests.swift */; };
@@ -106,6 +112,12 @@
 		C3C0B24126BB44A200171A04 /* StateSubscribtion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateSubscribtion.swift; sourceTree = "<group>"; };
 		C3C0B24226BB44A200171A04 /* Middleware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Middleware.swift; sourceTree = "<group>"; };
 		C3C0B24326BB44A200171A04 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		C3C0B24D26BB477200171A04 /* Presenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
+		C3C0B24E26BB477200171A04 /* GraphPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphPresenter.swift; sourceTree = "<group>"; };
+		C3C0B24F26BB477200171A04 /* ReduxVMSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReduxVMSettings.swift; sourceTree = "<group>"; };
+		C3C0B25026BB477300171A04 /* TVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TVC.swift; sourceTree = "<group>"; };
+		C3C0B25126BB477300171A04 /* VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VC.swift; sourceTree = "<group>"; };
+		C3C0B25226BB477300171A04 /* CVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CVC.swift; sourceTree = "<group>"; };
 		OBJ_23 /* RedSwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedSwiftTests.swift; sourceTree = "<group>"; };
 		OBJ_24 /* XCTestManifests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestManifests.swift; sourceTree = "<group>"; };
 		OBJ_29 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -166,6 +178,19 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C3C0B24C26BB476100171A04 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				C3C0B25226BB477300171A04 /* CVC.swift */,
+				C3C0B24E26BB477200171A04 /* GraphPresenter.swift */,
+				C3C0B24D26BB477200171A04 /* Presenter.swift */,
+				C3C0B24F26BB477200171A04 /* ReduxVMSettings.swift */,
+				C3C0B25026BB477300171A04 /* TVC.swift */,
+				C3C0B25126BB477300171A04 /* VC.swift */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 		OBJ_21 /* Tests */ = {
@@ -230,6 +255,7 @@
 				C3C0B24026BB44A200171A04 /* SideEffectSubscription.swift */,
 				C3C0B24126BB44A200171A04 /* StateSubscribtion.swift */,
 				C3C0B24326BB44A200171A04 /* Store.swift */,
+				C3C0B24C26BB476100171A04 /* UI */,
 			);
 			name = RedSwift;
 			path = Sources/RedSwift;
@@ -378,9 +404,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
+				C3C0B25326BB477300171A04 /* Presenter.swift in Sources */,
+				C3C0B25626BB477300171A04 /* TVC.swift in Sources */,
+				C3C0B25426BB477300171A04 /* GraphPresenter.swift in Sources */,
 				C3C0B24926BB44A200171A04 /* StateSubscribtion.swift in Sources */,
 				C3C0B24626BB44A200171A04 /* CoreTypes.swift in Sources */,
 				C3C0B24726BB44A200171A04 /* LegacySubscription.swift in Sources */,
+				C3C0B25826BB477300171A04 /* CVC.swift in Sources */,
+				C3C0B25526BB477300171A04 /* ReduxVMSettings.swift in Sources */,
+				C3C0B25726BB477300171A04 /* VC.swift in Sources */,
 				C3C0B24B26BB44A200171A04 /* Store.swift in Sources */,
 				C3C0B24826BB44A200171A04 /* SideEffectSubscription.swift in Sources */,
 				C3C0B24426BB44A200171A04 /* Interactor.swift in Sources */,
