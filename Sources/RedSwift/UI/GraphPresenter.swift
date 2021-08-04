@@ -8,6 +8,12 @@
 import DeclarativeTVC
 import UIKit
 
+public protocol TVCOwner {
+    associatedtype TableViewController: TVC & PropsReceiver
+
+    var tvc: TableViewController { get }
+}
+
 open class GraphPresenterBase<Graph, Props: Properties, PR: PropsReceiver>: GraphSubscriber, PresenterProtocol {
     public typealias GraphSubscriberGraphType = Graph
 
