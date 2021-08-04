@@ -33,17 +33,14 @@
 		C3781D03256FF7FD0042EA3A /* TestStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3781CFF256FF7FD0042EA3A /* TestStore.swift */; };
 		C3781D04256FF7FD0042EA3A /* CounterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3781D00256FF7FD0042EA3A /* CounterState.swift */; };
 		C3781D05256FF7FD0042EA3A /* AsyncIntercator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3781D01256FF7FD0042EA3A /* AsyncIntercator.swift */; };
-		OBJ_37 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* Action.swift */; };
-		OBJ_38 /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* Interactor.swift */; };
-		OBJ_39 /* Middleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* Middleware.swift */; };
-		OBJ_40 /* SideEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* SideEffects.swift */; };
-		OBJ_41 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* State.swift */; };
-		OBJ_42 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* Store.swift */; };
-		OBJ_43 /* StoreSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* StoreSubscriber.swift */; };
-		OBJ_44 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_16 /* Subscription.swift */; };
-		OBJ_45 /* Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* Assertions.swift */; };
-		OBJ_46 /* Coding.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_19 /* Coding.swift */; };
-		OBJ_47 /* TypeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_20 /* TypeHelper.swift */; };
+		C3C0B24426BB44A200171A04 /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0B23C26BB44A200171A04 /* Interactor.swift */; };
+		C3C0B24526BB44A200171A04 /* GraphSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0B23D26BB44A200171A04 /* GraphSubscription.swift */; };
+		C3C0B24626BB44A200171A04 /* CoreTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0B23E26BB44A200171A04 /* CoreTypes.swift */; };
+		C3C0B24726BB44A200171A04 /* LegacySubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0B23F26BB44A200171A04 /* LegacySubscription.swift */; };
+		C3C0B24826BB44A200171A04 /* SideEffectSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0B24026BB44A200171A04 /* SideEffectSubscription.swift */; };
+		C3C0B24926BB44A200171A04 /* StateSubscribtion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0B24126BB44A200171A04 /* StateSubscribtion.swift */; };
+		C3C0B24A26BB44A200171A04 /* Middleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0B24226BB44A200171A04 /* Middleware.swift */; };
+		C3C0B24B26BB44A200171A04 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0B24326BB44A200171A04 /* Store.swift */; };
 		OBJ_54 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 		OBJ_65 /* RedSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_23 /* RedSwiftTests.swift */; };
 		OBJ_66 /* XCTestManifests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_24 /* XCTestManifests.swift */; };
@@ -101,25 +98,22 @@
 		C3781CFF256FF7FD0042EA3A /* TestStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestStore.swift; sourceTree = "<group>"; };
 		C3781D00256FF7FD0042EA3A /* CounterState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CounterState.swift; sourceTree = "<group>"; };
 		C3781D01256FF7FD0042EA3A /* AsyncIntercator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncIntercator.swift; sourceTree = "<group>"; };
-		OBJ_10 /* Interactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interactor.swift; sourceTree = "<group>"; };
-		OBJ_11 /* Middleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Middleware.swift; sourceTree = "<group>"; };
-		OBJ_12 /* SideEffects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideEffects.swift; sourceTree = "<group>"; };
-		OBJ_13 /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
-		OBJ_14 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
-		OBJ_15 /* StoreSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSubscriber.swift; sourceTree = "<group>"; };
-		OBJ_16 /* Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
-		OBJ_18 /* Assertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assertions.swift; sourceTree = "<group>"; };
-		OBJ_19 /* Coding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coding.swift; sourceTree = "<group>"; };
-		OBJ_20 /* TypeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeHelper.swift; sourceTree = "<group>"; };
+		C3C0B23C26BB44A200171A04 /* Interactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Interactor.swift; sourceTree = "<group>"; };
+		C3C0B23D26BB44A200171A04 /* GraphSubscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphSubscription.swift; sourceTree = "<group>"; };
+		C3C0B23E26BB44A200171A04 /* CoreTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreTypes.swift; sourceTree = "<group>"; };
+		C3C0B23F26BB44A200171A04 /* LegacySubscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacySubscription.swift; sourceTree = "<group>"; };
+		C3C0B24026BB44A200171A04 /* SideEffectSubscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideEffectSubscription.swift; sourceTree = "<group>"; };
+		C3C0B24126BB44A200171A04 /* StateSubscribtion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateSubscribtion.swift; sourceTree = "<group>"; };
+		C3C0B24226BB44A200171A04 /* Middleware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Middleware.swift; sourceTree = "<group>"; };
+		C3C0B24326BB44A200171A04 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		OBJ_23 /* RedSwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedSwiftTests.swift; sourceTree = "<group>"; };
 		OBJ_24 /* XCTestManifests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestManifests.swift; sourceTree = "<group>"; };
 		OBJ_29 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		OBJ_30 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		OBJ_31 /* RedSwift.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = RedSwift.podspec; sourceTree = "<group>"; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
-		OBJ_9 /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
-		"RedSwift::RedSwift::Product" /* RedSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RedSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		"RedSwift::RedSwiftTests::Product" /* RedSwiftTests.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = RedSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		"RedSwift::RedSwift::Product" /* RedSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RedSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		"RedSwift::RedSwiftTests::Product" /* RedSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = RedSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,16 +168,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		OBJ_17 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_18 /* Assertions.swift */,
-				OBJ_19 /* Coding.swift */,
-				OBJ_20 /* TypeHelper.swift */,
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
 		OBJ_21 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -212,7 +196,7 @@
 			name = Products;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -225,7 +209,6 @@
 				OBJ_25 /* Products */,
 				C3781CEC256FF7500042EA3A /* Frameworks */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_7 /* Sources */ = {
@@ -239,15 +222,14 @@
 		OBJ_8 /* RedSwift */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_9 /* Action.swift */,
-				OBJ_10 /* Interactor.swift */,
-				OBJ_11 /* Middleware.swift */,
-				OBJ_12 /* SideEffects.swift */,
-				OBJ_13 /* State.swift */,
-				OBJ_14 /* Store.swift */,
-				OBJ_15 /* StoreSubscriber.swift */,
-				OBJ_16 /* Subscription.swift */,
-				OBJ_17 /* Utils */,
+				C3C0B23E26BB44A200171A04 /* CoreTypes.swift */,
+				C3C0B23D26BB44A200171A04 /* GraphSubscription.swift */,
+				C3C0B23C26BB44A200171A04 /* Interactor.swift */,
+				C3C0B23F26BB44A200171A04 /* LegacySubscription.swift */,
+				C3C0B24226BB44A200171A04 /* Middleware.swift */,
+				C3C0B24026BB44A200171A04 /* SideEffectSubscription.swift */,
+				C3C0B24126BB44A200171A04 /* StateSubscribtion.swift */,
+				C3C0B24326BB44A200171A04 /* Store.swift */,
 			);
 			name = RedSwift;
 			path = Sources/RedSwift;
@@ -337,6 +319,9 @@
 						DevelopmentTeam = 42K94E5YQD;
 						ProvisioningStyle = Automatic;
 					};
+					"RedSwift::RedSwift" = {
+						LastSwiftMigration = 1250;
+					};
 				};
 			};
 			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "RedSwift" */;
@@ -347,7 +332,7 @@
 				en,
 				Base,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_25 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -393,17 +378,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_37 /* Action.swift in Sources */,
-				OBJ_38 /* Interactor.swift in Sources */,
-				OBJ_39 /* Middleware.swift in Sources */,
-				OBJ_40 /* SideEffects.swift in Sources */,
-				OBJ_41 /* State.swift in Sources */,
-				OBJ_42 /* Store.swift in Sources */,
-				OBJ_43 /* StoreSubscriber.swift in Sources */,
-				OBJ_44 /* Subscription.swift in Sources */,
-				OBJ_45 /* Assertions.swift in Sources */,
-				OBJ_46 /* Coding.swift in Sources */,
-				OBJ_47 /* TypeHelper.swift in Sources */,
+				C3C0B24926BB44A200171A04 /* StateSubscribtion.swift in Sources */,
+				C3C0B24626BB44A200171A04 /* CoreTypes.swift in Sources */,
+				C3C0B24726BB44A200171A04 /* LegacySubscription.swift in Sources */,
+				C3C0B24B26BB44A200171A04 /* Store.swift in Sources */,
+				C3C0B24826BB44A200171A04 /* SideEffectSubscription.swift in Sources */,
+				C3C0B24426BB44A200171A04 /* Interactor.swift in Sources */,
+				C3C0B24526BB44A200171A04 /* GraphSubscription.swift in Sources */,
+				C3C0B24A26BB44A200171A04 /* Middleware.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -467,6 +449,7 @@
 		C3781CE5256FF6F60042EA3A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -532,6 +515,7 @@
 		C3781CE6256FF6F60042EA3A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -620,6 +604,8 @@
 		OBJ_34 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -638,6 +624,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGET_NAME = RedSwift;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
@@ -648,6 +635,8 @@
 		OBJ_35 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -730,6 +719,7 @@
 		OBJ_62 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -755,6 +745,7 @@
 		OBJ_63 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
