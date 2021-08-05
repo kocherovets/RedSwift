@@ -1,5 +1,5 @@
+import DeclarativeTVC
 import UIKit
-
 
 public protocol NavModel: Equatable {
     var title: String? { get }
