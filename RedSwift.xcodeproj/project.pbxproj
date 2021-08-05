@@ -33,6 +33,10 @@
 		C3781D03256FF7FD0042EA3A /* TestStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3781CFF256FF7FD0042EA3A /* TestStore.swift */; };
 		C3781D04256FF7FD0042EA3A /* CounterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3781D00256FF7FD0042EA3A /* CounterState.swift */; };
 		C3781D05256FF7FD0042EA3A /* AsyncIntercator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3781D01256FF7FD0042EA3A /* AsyncIntercator.swift */; };
+		C3B4842826BC8860006EF921 /* SUPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B4842426BC8860006EF921 /* SUPresenter.swift */; };
+		C3B4842926BC8860006EF921 /* SUVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B4842526BC8860006EF921 /* SUVC.swift */; };
+		C3B4842A26BC8860006EF921 /* SUView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B4842626BC8860006EF921 /* SUView.swift */; };
+		C3B4842B26BC8860006EF921 /* NavModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B4842726BC8860006EF921 /* NavModel.swift */; };
 		C3C0B24426BB44A200171A04 /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0B23C26BB44A200171A04 /* Interactor.swift */; };
 		C3C0B24526BB44A200171A04 /* GraphSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0B23D26BB44A200171A04 /* GraphSubscription.swift */; };
 		C3C0B24626BB44A200171A04 /* CoreTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0B23E26BB44A200171A04 /* CoreTypes.swift */; };
@@ -104,6 +108,10 @@
 		C3781CFF256FF7FD0042EA3A /* TestStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestStore.swift; sourceTree = "<group>"; };
 		C3781D00256FF7FD0042EA3A /* CounterState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CounterState.swift; sourceTree = "<group>"; };
 		C3781D01256FF7FD0042EA3A /* AsyncIntercator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncIntercator.swift; sourceTree = "<group>"; };
+		C3B4842426BC8860006EF921 /* SUPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SUPresenter.swift; sourceTree = "<group>"; };
+		C3B4842526BC8860006EF921 /* SUVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SUVC.swift; sourceTree = "<group>"; };
+		C3B4842626BC8860006EF921 /* SUView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SUView.swift; sourceTree = "<group>"; };
+		C3B4842726BC8860006EF921 /* NavModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavModel.swift; sourceTree = "<group>"; };
 		C3C0B23C26BB44A200171A04 /* Interactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Interactor.swift; sourceTree = "<group>"; };
 		C3C0B23D26BB44A200171A04 /* GraphSubscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphSubscription.swift; sourceTree = "<group>"; };
 		C3C0B23E26BB44A200171A04 /* CoreTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreTypes.swift; sourceTree = "<group>"; };
@@ -178,6 +186,17 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C3B4842326BC8850006EF921 /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				C3B4842726BC8860006EF921 /* NavModel.swift */,
+				C3B4842426BC8860006EF921 /* SUPresenter.swift */,
+				C3B4842526BC8860006EF921 /* SUVC.swift */,
+				C3B4842626BC8860006EF921 /* SUView.swift */,
+			);
+			path = SwiftUI;
 			sourceTree = "<group>";
 		};
 		C3C0B24C26BB476100171A04 /* UI */ = {
@@ -255,6 +274,7 @@
 				C3C0B24026BB44A200171A04 /* SideEffectSubscription.swift */,
 				C3C0B24126BB44A200171A04 /* StateSubscribtion.swift */,
 				C3C0B24326BB44A200171A04 /* Store.swift */,
+				C3B4842326BC8850006EF921 /* SwiftUI */,
 				C3C0B24C26BB476100171A04 /* UI */,
 			);
 			name = RedSwift;
@@ -410,9 +430,13 @@
 				C3C0B24926BB44A200171A04 /* StateSubscribtion.swift in Sources */,
 				C3C0B24626BB44A200171A04 /* CoreTypes.swift in Sources */,
 				C3C0B24726BB44A200171A04 /* LegacySubscription.swift in Sources */,
+				C3B4842926BC8860006EF921 /* SUVC.swift in Sources */,
+				C3B4842B26BC8860006EF921 /* NavModel.swift in Sources */,
 				C3C0B25826BB477300171A04 /* CVC.swift in Sources */,
 				C3C0B25526BB477300171A04 /* ReduxVMSettings.swift in Sources */,
+				C3B4842826BC8860006EF921 /* SUPresenter.swift in Sources */,
 				C3C0B25726BB477300171A04 /* VC.swift in Sources */,
+				C3B4842A26BC8860006EF921 /* SUView.swift in Sources */,
 				C3C0B24B26BB44A200171A04 /* Store.swift in Sources */,
 				C3C0B24826BB44A200171A04 /* SideEffectSubscription.swift in Sources */,
 				C3C0B24426BB44A200171A04 /* Interactor.swift in Sources */,
