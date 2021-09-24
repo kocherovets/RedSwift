@@ -245,14 +245,14 @@ extension Store {
     }
 
     open func unsubscribe(_ subscriber: AnyStoreSubscriber) {
-        #if swift(>=5.0)
-            if let index = subscriptions.firstIndex(where: { $0.subscriber === subscriber }) {
-                subscriptions.remove(at: index)
-            }
-        #else
-            if let index = subscriptions.index(where: { $0.subscriber === subscriber }) {
-                subscriptions.remove(at: index)
-            }
-        #endif
+//        #if swift(>=5.0)
+//            if let index = subscriptions.firstIndex(where: { $0.subscriber === subscriber }) {
+//                subscriptions.remove(at: index)
+//            }
+//        #else
+//            if let index = subscriptions.index(where: { $0.subscriber === subscriber }) {
+//                subscriptions.remove(at: index)
+//            }
+//        #endif
     }
 }
