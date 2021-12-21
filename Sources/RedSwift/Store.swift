@@ -98,7 +98,8 @@ open class Store<State: StateType>: StoreTrunk, StoreType, GraphStore {
 
         let actionType = String(reflecting: type(of: action))
 
-        queue.async { [weak self] in
+//        queue.async { [weak self] in
+        queue.async(flags: .barrier) { [weak self] in
 
             guard let self = self else { fatalError() }
 
@@ -126,6 +127,7 @@ open class Store<State: StateType>: StoreTrunk, StoreType, GraphStore {
             }
 
             if skipActionProcessing {
+                self.box.lastAction = action
                 return
             }
 
