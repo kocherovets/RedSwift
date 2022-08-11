@@ -56,8 +56,12 @@ open class GraphPresenterBase<Graph, Props: Properties, PR: PropsReceiver>: Grap
         if ReduxVMSettings.logSubscribeMessages {
             print("unsubscribe presenter \(type(of: self))")
         }
-        store.queue.sync {
+        if Thread.current.threadName == store.queue.label {
             store.unsubscribe(self)
+        } else {
+            store.queue.sync {
+                store.unsubscribe(self)
+            }
         }
     }
 
