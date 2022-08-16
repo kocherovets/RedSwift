@@ -115,4 +115,21 @@ open class GraphPresenterBase<Graph, Props: Properties, PR: PropsReceiver>: Grap
     open func props(for graph: Graph) -> Props? {
         return nil
     }
+    
+    public final func updateUI() {
+        let block = { [weak self] in
+            guard
+                let self = self,
+                let graph = self.store.graph as? Graph
+            else { return }
+            self.propsReceiver?.set(newProps: self.props(for: graph))
+        }
+        if Thread.current.threadName == store.queue.label {
+            block()
+        } else {
+            store.queue.async {
+                block()
+            }
+        }
+    }
 }
